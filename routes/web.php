@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dudi\DudiController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
-use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Siswa\Presensi2Controller;
 use App\Http\Controllers\Siswa\DownloadPdfController;
 use App\Http\Controllers\Admin\CapaianPembelajaranController;
@@ -37,7 +37,7 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     //capaian pembelajaran
     Route::resource('/capaian-pembelajaran', CapaianPembelajaranController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('/capaian-pembelajaran/import', [CapaianPembelajaranController::class, 'import'])
-    ->name('admin.capaian-pembelajaran.import');
+        ->name('admin.capaian-pembelajaran.import');
 
 });
 
