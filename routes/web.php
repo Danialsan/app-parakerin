@@ -40,6 +40,9 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     Route::post('/capaian-pembelajaran/import', [CapaianPembelajaranController::class, 'import'])
         ->name('admin.capaian-pembelajaran.import');
 
+    // Dudi
+    Route::resource('/dudi', DudiController::class)->only(['index']);
+
 });
 
 // Dudi
