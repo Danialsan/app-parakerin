@@ -17,7 +17,7 @@ class Presensi2Controller extends Controller
         $waktuSekarang = date('Y-m-d');
         $user = Auth::user();
         $siswa = $user->siswa;
-        $posisi_awal = PresensiSiswa::orderBy('created_at', 'asc')->where('posisi_masuk', '!=', NULL)->where('absensi', 'hadir')->first();
+        $posisi_awal = PresensiSiswa::where('siswa_id', $siswa->id)->orderBy('created_at', 'asc')->where('posisi_masuk', '!=', NULL)->where('absensi', 'hadir')->first();
         $presensiHariIni = PresensiSiswa::whereDate('created_at', $waktuSekarang)->where('siswa_id', $siswa->id)->first();
 
         return view('students.presensi-2', compact('presensiHariIni', 'posisi_awal'));

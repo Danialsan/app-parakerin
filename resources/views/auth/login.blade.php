@@ -155,11 +155,11 @@
                             @csrf
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                    value="{{ old('username') }}" id="floatingInput" placeholder="" name="username"
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email') }}" id="floatingInput" placeholder="" name="email"
                                     aria-describedby="floatingInputHelp" autocomplete="on" />
-                                <label for="floatingInput">Nama Pengguna <span class="text-danger">*</span></label>
-                                @error('username')
+                                <label for="floatingInput">Email <span class="text-danger">*</span></label>
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

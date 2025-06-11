@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('nis')->nullable();
             $table->enum('gender', ['P', 'L'])->nullable();
+            $table->foreignUuid('dudi_id')->nullable()->constrained('dudi', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             // $table->timestamps();
         });

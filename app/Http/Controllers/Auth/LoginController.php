@@ -30,35 +30,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         $user = Auth::user();
-        // dd($user->role);
 
-        // switch (strtolower($user->role)) {
-        //     case 'siswa':
-        //         return '/siswa/beranda';
-        //     case 'admin':
-        //         return '/admin/beranda';
-        //     default:
-        //         // fallback: bisa logout atau redirect ke error page
-        //         Auth::logout();
-        //         return '/login';
-        // }
-        // dd(auth()->user(), request()->url());
-        // if (!$user) {
-        //     return '/login';
-        // }
-
-        // if ($user->role == 'siswa') {
-        //     return '/siswa/beranda';
-        // } elseif ($user->role == 'admin') {
-        //     return '/admin/beranda';
-        // }
-
-        // // return '/login';
-        // abort(403, "Role tidak dikenali.");
-
-        // if (!$user) {
-        //     return '/login';
-        // }
 
         if ($user->role === 'siswa') {
             return '/siswa/beranda';
