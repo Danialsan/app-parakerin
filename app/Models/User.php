@@ -20,6 +20,7 @@ class User extends Authenticatable
         // 'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -55,5 +56,5 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class);
     }
 
-    public $timestamps = false;
+    // public $timestamps = false;
 }
