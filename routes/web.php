@@ -18,6 +18,7 @@ use App\Http\Controllers\Siswa\Presensi2Controller;
 use App\Http\Controllers\Siswa\DownloadPdfController;
 use App\Http\Controllers\Admin\CapaianPembelajaranController;
 
+
 // Route::redirect('/', '/login');
 
 Auth::routes();
