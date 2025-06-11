@@ -5,11 +5,13 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            , made with ❤️ by
-            <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+            , Copyright
+            <a class="footer-link fw-bolder">Markas Coding Smeksaga</a>
         </div>
         <div>
-            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+            Designed By <a href="https://themeselection.com" target="_blank"
+                class="footer-link fw-bolder">ThemeSelection</a>
+            {{-- <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
             <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More
                 Themes</a>
 
@@ -17,7 +19,7 @@
                 class="footer-link me-4">Documentation</a>
 
             <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                class="footer-link me-4">Support</a>
+                class="footer-link me-4">Support</a> --}}
         </div>
     </div>
 </footer>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Expr\FuncCall;
 
 class Siswa extends Model
 {
@@ -27,6 +28,11 @@ class Siswa extends Model
     public function presensiSiswa()
     {
         return $this->hasMany(PresensiSiswa::class);
+    }
+
+    public function dudi()
+    {
+        return $this->belongsTo(Dudi::class);
     }
 
 }

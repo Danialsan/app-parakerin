@@ -71,20 +71,14 @@
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Absensi</span>
             </li>
-            {{-- <li class="menu-item {{ request()->is('siswa/presensi') ? 'active' : '' }}">
+            <li class="menu-item {{ request()->is('siswa/presensi') ? 'active' : '' }}">
                 <a href="{{ route('siswa.presensi.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar-check"></i>
                     <div data-i18n="Analytics">Presensi</div>
                 </a>
-            </li> --}}
-            <li class="menu-item {{ request()->is('siswa/presensi-2') ? 'active' : '' }}">
-                <a href="{{ route('siswa.presensi-2.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-                    <div data-i18n="Analytics">Presensi 2</div>
-                </a>
             </li>
-            <li class="menu-item">
-                <a href="" class="menu-link">
+            <li class="menu-item {{ request()->is('siswa/rekap-presensi') ? 'active' : '' }}">
+                <a href="{{ route('siswa.rekap-presensi.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bxs-book-content"></i>
                     <div data-i18n="Analytics">Rekap Presensi</div>
                 </a>
