@@ -1,14 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Dudi\DudiController;
-use App\Http\Controllers\Siswa\BerandaController;
-use App\Http\Controllers\Siswa\DownloadPdfController;
-use App\Http\Controllers\Siswa\Presensi2Controller;
-use App\Http\Controllers\Siswa\RekapPresensiController;
-=======
->>>>>>> 04aa6d87331eeefe5584f703fcf964ab9eeff763
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JurusanController;
