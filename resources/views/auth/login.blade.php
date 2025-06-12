@@ -26,8 +26,7 @@
                         </div>
 
                         <div class="text-center mb-4">
-                            <h4 class="mb-1 fw-bold">Selamat datang di SIMAGANG</h4>
-                            <p>Sistem Informasi Magang</p>
+                            <h4 class="mb-1 fw-bold">Selamat datang di MAGANGKU</h4>
                         </div>
 
                         <div class="attention alert-warning fw-light"

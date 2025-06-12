@@ -5,6 +5,10 @@
 
 <head>
 
+    @auth
+        @include('partials.pwa.head-link')
+    @endauth
+
     @include('partials.head-link')
 
     @stack('custom-style')
@@ -83,6 +87,11 @@
 
 
     @stack('custom-script')
+
+
+    @auth
+        @include('partials.pwa.footer-link')
+    @endauth
 
 </body>
 

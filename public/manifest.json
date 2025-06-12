@@ -1,0 +1,17 @@
+{
+    "name": "MagangKu",
+    "short_name": "MGK",
+    "start_url": "/index.php",
+    "background_color": "#6777ef",
+    "description": "Aplikasi magang bagi siswa siswi smeksaga",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "assets/static/images/logo/mylogo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
