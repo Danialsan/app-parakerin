@@ -19,10 +19,8 @@
                 <!-- Register -->
                 <div class="card">
                     <div class="card-body">
-                        <div class="app-brand justify-content-center gap-4 align-items-center mb-4">
-                            <img src="{{ asset('assets/static/images/logo/logo-smeksaga.png') }}" width="120"
-                                alt="">
-                            <img src="{{ asset('assets/static/images/logo/mylogo.png') }}" width="55" alt="">
+                        <div class="app-brand justify-content-center gap-4 align-items-center mb-3">
+                            <img src="{{ asset('assets/static/images/logo/logo-guest.png') }}" width="150" alt="">
                         </div>
 
                         <div class="text-center mb-4">

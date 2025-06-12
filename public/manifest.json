@@ -1,17 +1,16 @@
 {
     "name": "MagangKu",
-    "short_name": "MGK",
-    "start_url": "/index.php",
-    "background_color": "#6777ef",
-    "description": "Aplikasi magang bagi siswa siswi smeksaga",
-    "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "short_name": "MK",
+    "start_url": "/login",
+    "background_color": "#fff",
+    "description": "Aplikasi magang SMKN 1 Blega",
+    "display": "standalone",
+    "theme_color": "#fff",
     "icons": [
         {
-            "src": "assets/static/images/logo/mylogo.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
+            "src": "assets/static/images/logo/logo-app-edit.png",
+            "sizes": "500x500",
+            "type": "image/png"
         }
     ]
 }
