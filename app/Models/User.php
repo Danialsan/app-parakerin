@@ -56,5 +56,5 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class);
     }
 
-    // public $timestamps = false;
+    public $timestamps = false;
 }

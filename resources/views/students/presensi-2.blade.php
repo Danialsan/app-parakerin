@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     @push('custom-style')
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -18,6 +17,22 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Siswa /</span> Presensi </h4>
+
+        @if (session('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>{{ session('success') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>{{ session('success') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="row">
             <!-- Lokasi -->
             <div class="col-12 col-lg-6 mb-4 order-0">
@@ -279,16 +294,38 @@
 
             @endif
 
+            <div class="modal fade" id="layananLokasi" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel1">Peringatan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-danger">
+                                Hidupkan layanan lokasi anda untuk melakukan absensi.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
-
     @push('custom-script')
         <script>
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(ambilPosisi);
+                navigator.geolocation.getCurrentPosition(ambilPosisi, tidakSupport);
             }
 
-            const inputPosisiMasuk = document.getElementById('posisi_masuk');
+            var inputPosisiMasuk = document.getElementById('posisi_masuk') || null;
 
 
             function ambilPosisi(position) {
@@ -335,6 +372,19 @@
                         document.getElementById('opt-hadir').remove();
                     }
                 @endif
+            }
+
+            function tidakSupport(e) {
+                switch (e.code) {
+                    case 1:
+                        // alert('Hidupkan layanan lokasi anda untuk melakukan absen')
+                        $('#layananLokasi').modal('show');
+                        break;
+
+                    default:
+                        return false
+                        break;
+                }
             }
 
             function absensiPulang(event) {
@@ -388,5 +438,4 @@
             }
         </script>
     @endpush
-
 @endsection

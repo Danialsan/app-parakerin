@@ -365,7 +365,7 @@
     </div>
 
 
-    @push('custom-script')
+    {{-- @push('custom-script')
         <script>
             window.addEventListener('DOMContentLoaded', () => {
                 getLocation();
@@ -440,7 +440,7 @@
 
             }
         </script>
-    @endpush
+    @endpush --}}
 
 
 @endsection

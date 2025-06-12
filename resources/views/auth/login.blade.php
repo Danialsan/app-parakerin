@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    @push('custom-style')
+        <style>
+            .attention {
+                position: relative;
+                padding: .75rem 1.25rem;
+                margin-bottom: 1rem;
+                border: 1px solid transparent;
+                border-radius: .25rem
+            }
+        </style>
+    @endpush
+
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
@@ -18,7 +30,7 @@
                             <p>Sistem Informasi Magang</p>
                         </div>
 
-                        <div class="alert alert-warning fw-light"
+                        <div class="attention alert-warning fw-light"
                             style="color: #566a7f; font-size: .9rem; background-color: #fef5e5; border: 1px solid #ffdfa5;"
                             role="alert">
                             Silahkan MASUK menggunakan No Induk Siswa sebagai Nama Pengguna dan Tanggal lahir Anda sebagai
