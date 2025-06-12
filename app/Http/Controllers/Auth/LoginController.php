@@ -39,6 +39,12 @@ class LoginController extends Controller
         if ($user->role === 'admin') {
             return '/admin/beranda';
         }
+        if ($user->role === 'dudi') {
+            return '/dudi/beranda';
+        }
+        if ($user->role === 'pembimbing') {
+            return '/pembimbing_sekolah/beranda';
+        }
 
         // abort(403, 'Role tidak dikenali');
         return '/login';

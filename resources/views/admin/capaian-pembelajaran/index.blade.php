@@ -21,11 +21,11 @@
 
     <div class="card">
       <div class="card-header d-flex justify-content-end gap-1">
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
           <i class="bx bx-plus"></i> Tambah Data
         </button>
         <!-- Tombol Import -->
-        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalImport">
+        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalImport">
           <i class="bx bx-upload"></i> Unggah Data
         </button>
       </div>
@@ -47,16 +47,15 @@
                   <td>{{ $item->jurusan->nama_jurusan }}</td>
                   <td>{{ $item->deskripsi_cp }}</td>
                   <td>
-                    <div class="d-flex flex-wrap gap-1 justify-content-end">
+                    <div class="d-grid gap-1 d-md-flex justify-content-md-end">
                       <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $item->id }}"
                         data-jurusan="{{ $item->jurusan->id }}" data-deskripsi="{{ $item->deskripsi_cp }}"
                         data-bs-toggle="modal" data-bs-target="#modalEdit">
                         <i class="bx bx-pencil"></i>
                       </button>
 
-                      <button type="button" class="btn btn-sm me-1 btn-danger btn-delete" data-id="{{ $item->id }}"
-                        data-deskripsi="{{ $item->deskripsi_cp }}" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                        <i class="bx bx-trash"></i>
+                      <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
+                        data-deskripsi="{{ $item->deskripsi_cp }}"><i class="bx bx-trash"></i>
                       </button>
 
                     </div>
@@ -164,29 +163,7 @@
       </form>
     </div>
   </div>
-  <!-- Modal Hapus -->
-  <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="formDelete" method="POST">
-        @csrf
-        @method('DELETE')
-        <input type="hidden" name="id" id="delete_id">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalDeleteLabel">Konfirmasi Hapus</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus CP : <strong id="deleteDeskripsi_cp"></strong>?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-danger">Hapus</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+
   <!-- Modal Import -->
   <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -198,15 +175,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <div class="mb-3">
+              <label for="file" class="form-label">Pilih file Excel (.xlsx)</label>
+              <input type="file" name="file" class="form-control" required accept=".xlsx">
+            </div>
             <div class="alert alert-info" role="alert">
               Gunakan format sesuai template. <br>
               <a href="{{ asset('template/template_cp.xlsx') }}" class="btn btn-sm btn-outline-primary mt-2" download>
                 <i class="bx bx-download"></i> Unduh Template Excel
               </a>
-            </div>
-            <div class="mb-3">
-              <label for="file" class="form-label">Pilih file Excel (.xlsx)</label>
-              <input type="file" name="file" class="form-control" required accept=".xlsx">
             </div>
           </div>
           <div class="modal-footer">
@@ -217,6 +194,7 @@
       </form>
     </div>
   </div>
+  {{-- </div> --> --}}
 @endsection
 @push('custom-script')
   <script>
@@ -241,23 +219,51 @@
           formEdit.action = `/admin/capaian-pembelajaran/${id}`;
         });
       });
+    });
+  </script>
+  <script>
+    // --- Script Delete
+    document.querySelectorAll('.btn-delete').forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.dataset.id;
+        // console.log('ID yang akan dihapus:', id);
+        const deskripsi = this.dataset.deskripsi;
 
-      // --- Script Delete
-      const formDelete = document.getElementById('formDelete');
-      const deleteDeskripsi_cp = document.getElementById('deleteDeskripsi_cp');
-      const delete_id = document.getElementById('delete_id');
-
-      document.querySelectorAll('.btn-delete').forEach(button => {
-        button.addEventListener('click', function() {
-          const id = this.dataset.id;
-          const deskripsi = this.dataset.deskripsi;
-
-          deleteDeskripsi_cp.textContent = deskripsi;
-          delete_id.value = id;
-          formDelete.action = `/admin/capaian-pembelajaran/${id}`;
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: `CP "${deskripsi}" akan dihapus permanen!`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Ya, Hapus!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Kirim form hapus lewat JS
+            const form = document.createElement('form');
+            form.action = `/admin/capaian-pembelajaran/${id}`;
+            form.method = 'POST';
+            const token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '_token';
+            token.value = '{{ csrf_token() }}';
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'DELETE';
+            form.appendChild(token);
+            form.appendChild(method);
+            document.body.appendChild(form);
+            const inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'id';
+            inputId.value = id;
+            form.appendChild(inputId);
+            form.submit();
+          }
         });
       });
-
     });
   </script>
 @endpush

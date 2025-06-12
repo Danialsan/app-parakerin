@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isSiswa' => App\Http\Middleware\Siswa::class,
             'isAdmin' => App\Http\Middleware\Admin::class,
             'isDudi' => App\Http\Middleware\Dudi::class,
+            'isPembimbingSekolah' => PembimbingSekolah::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

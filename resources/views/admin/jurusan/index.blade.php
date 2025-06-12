@@ -20,10 +20,11 @@
     @endif
 
     <div class="card">
-      <div class="card-header d-flex justify-content-end">
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+      <div class="card-header d-flex justify-content-end gap-1">
+        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
           <i class="bx bx-plus"></i> Tambah Data
         </button>
+
       </div>
 
       <!-- /.card-header -->
@@ -43,15 +44,15 @@
                   <td>{{ $item->kode_jurusan }}</td>
                   <td>{{ $item->nama_jurusan }}</td>
                   <td>
-                    <div class="d-flex flex-wrap gap-1 justify-content-end">
+                    <div class="d-grid gap-1 d-md-flex justify-content-md-end">
                       <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $item->id }}"
                         data-kode="{{ $item->kode_jurusan }}" data-nama="{{ $item->nama_jurusan }}" data-bs-toggle="modal"
                         data-bs-target="#modalEdit" alt="Ubah Data">
                         <i class="bx bx-pencil"></i>
                       </button>
 
-                      <button type="button" class="btn btn-sm me-1 btn-danger btn-delete" data-id="{{ $item->id }}"
-                        data-nama="{{ $item->nama_jurusan }}" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                      <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
+                        data-nama="{{ $item->nama_jurusan }}">
                         <i class="bx bx-trash"></i>
                       </button>
                     </div>
@@ -143,29 +144,6 @@
       </form>
     </div>
   </div>
-  <!-- Modal Hapus -->
-  <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="formDelete" method="POST">
-        @csrf
-        @method('DELETE')
-        <input type="hidden" name="id" id="delete_id">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalDeleteLabel">Konfirmasi Hapus</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-          </div>
-          <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus jurusan <strong id="deleteNama"></strong>?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-danger">Hapus</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
 @endsection
 @push('custom-script')
   <script>
@@ -189,25 +167,49 @@
           formEdit.action = `/admin/jurusan/${id}`;
         });
       });
-
-      // --- Script Delete
-      const formDelete = document.getElementById('formDelete');
-      const deleteNama = document.getElementById('deleteNama');
-
-      document.querySelectorAll('.btn-delete').forEach(button => {
-        console.log("Button found:", button); // test
-        button.addEventListener('click', function() {
-          const id = this.dataset.id;
-          const nama = this.dataset.nama;
-
-          deleteNama.textContent = nama;
-          delete_id.value = id;
-          //   console.log("Tombol diklik");
-          //   console.log("Data ID:", id);
-          formDelete.action = `/admin/jurusan/${id}`;
+    });
+  </script>
+  <script>
+    // --- Script Delete
+    document.querySelectorAll('.btn-delete').forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.dataset.id;
+        const nama = this.dataset.nama;
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: `Jurusan "${nama}" akan dihapus permanen!`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Ya, Hapus!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Kirim form hapus lewat JS
+            const form = document.createElement('form');
+            form.action = `/admin/jurusan/${id}`;
+            form.method = 'POST';
+            const token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '_token';
+            token.value = '{{ csrf_token() }}';
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'DELETE';
+            form.appendChild(token);
+            form.appendChild(method);
+            document.body.appendChild(form);
+            const inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'id';
+            inputId.value = id;
+            form.appendChild(inputId);
+            form.submit();
+          }
         });
       });
-
     });
   </script>
 @endpush

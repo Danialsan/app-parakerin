@@ -65,6 +65,7 @@ class CapaianPembelajaranController extends Controller
     }
     public function destroy(Request $request)
     {
+        // dd($request->id);
         try {
             $capaianPembelajaran = CapaianPembelajaran::find($request->id);
             $capaianPembelajaran->delete();
@@ -83,7 +84,7 @@ class CapaianPembelajaranController extends Controller
         try {
             Excel::import(new CapaianPembelajaranImport, $request->file('file'));
 
-            return redirect()->back()->with('success', 'Data capaian pembelajaran berhasil diimpor.');
+            return redirect()->back()->with('success', 'Data capaian pembelajaran berhasil Unggah.');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $errorMessages = [];

@@ -10,12 +10,15 @@ class Dudi extends Model
     use HasUuids;
     protected $table = 'dudi';
     protected $fillable = [
+        'id',
         'pimpinan_dudi',
         'nama_perusahaan',
         'alamat_dudi',
         'radius_kantor',
         'posisi_kantor',
-        'user_id'
+        'user_id',
+        'bidang_usaha',
+        'nama_pembimbing',
     ];
 
     public $timestamps = false;
