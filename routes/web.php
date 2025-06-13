@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\Siswa\PresensiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dudi\DudiController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
 use App\Http\Controllers\Admin\DudiAdminController;
-use App\Http\Controllers\Siswa\Presensi2Controller;
 use App\Http\Controllers\Admin\SiswaAdminController;
 use App\Http\Controllers\Siswa\DownloadPdfController;
 use App\Http\Controllers\Admin\PengaturanPklController;
@@ -29,7 +29,7 @@ Route::get('pw', function () {
 // Siswa
 Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function () {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
-    Route::resource('/presensi', Presensi2Controller::class)->only(['index', 'store', 'update']);
+    Route::resource('/presensi', PresensiController::class)->only(['index', 'store', 'update']);
     Route::resource('rekap-presensi', RekapPresensiController::class)->only(['index']);
     Route::get('download-pdf', [DownloadPdfController::class, 'index'])->name('download-pdf');
 });
@@ -46,11 +46,11 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     Route::post('capaian-pembelajaran/import', [CapaianPembelajaranController::class, 'import'])->name('capaian-pembelajaran.import');
 
     // Dudi
-    Route::resource('dudi-admin', DudiAdminController::class)->only(['index','store','update','destroy']);
+    Route::resource('dudi-admin', DudiAdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('dudi-admin/import', [DudiAdminController::class, 'import'])->name('dudi-admin.import');
 
     // Pembimbing Sekolah
-    Route::resource('pembimbing-sekolah-admin', PembimbingSekolahAdminController::class)->only(['index','store','update','destroy']);
+    Route::resource('pembimbing-sekolah-admin', PembimbingSekolahAdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('pembimbing-sekolah-admin/import', [PembimbingSekolahAdminController::class, 'import'])->name('pembimbing-sekolah-admin.import');
 
     // siswa
@@ -58,7 +58,7 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     Route::post('siswa-admin/import', [SiswaAdminController::class, 'import'])->name('siswa-admin.import');
 
     // Pengaturan PKL
-    Route::resource('pengaturan-pkl', PengaturanPklController::class)->only(['index','store','update','destroy']);
+    Route::resource('pengaturan-pkl', PengaturanPklController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('pengaturan-pkl/import', [PengaturanPklController::class, 'import'])->name('pengaturan-pkl.import');
     Route::get('siswa-by-jurusan', [PengaturanPklController::class, 'getSiswaByJurusan'])->name('siswa.by.jurusan');
     Route::get('pengaturan-pkl/download', [PengaturanPklController::class, 'download'])->name('pengaturan-pkl.download');
@@ -72,5 +72,5 @@ Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
 
 Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {
     Route::get('beranda', [BerandaPembimbingController::class, 'index'])->name('index');
-    Route::resource('kunjungan', MonitoringController::class)->only(['index', 'store', 'update','destroy']);
+    Route::resource('kunjungan', MonitoringController::class)->only(['index', 'store', 'update', 'destroy']);
 });

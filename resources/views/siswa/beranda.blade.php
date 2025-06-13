@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <?php
+    $siswa = auth()->user()->siswa;
+    ?>
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
             <div class="col mb-4 order-0">
@@ -11,11 +15,11 @@
 
                                 <h5 class="card-title text-primary"> <img class="rounded-circle"
                                         src="{{ asset('assets/img/avatars/1.png') }}" alt="" width="60">
-                                    Selamat datang kembali, {{ auth()->user()->name }}!</h5>
+                                    Selamat datang kembali, {{ $siswa->nama }}!</h5>
 
                                 <div class="mt-4">
-                                    <div class="fw-semibold text-dark fs-5 mb-1">{{ auth()->user()->username }}</div>
-                                    <div class="fw-medium">Rekayasa Perangkat Lunak</div>
+                                    <div class="fw-semibold text-dark fs-5 mb-1">{{ $siswa->nis }}</div>
+                                    <div class="fw-medium">{{ $siswa->jurusan->nama_jurusan }}</div>
                                     <div class="fw-medium">Gasal 2024/2025</div>
                                 </div>
                             </div>

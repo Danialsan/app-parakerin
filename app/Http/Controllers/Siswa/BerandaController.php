@@ -23,7 +23,7 @@ class BerandaController extends Controller
      */
     public function index()
     {
-        return view('students.beranda');
+        return view('siswa.beranda');
     }
 
     /**
