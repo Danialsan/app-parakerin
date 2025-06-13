@@ -59,9 +59,8 @@ class Siswa extends Model
         return $this->hasOne(PengaturanPkl::class);
     }
 
-
-
-
-
-
+    public function monitoringDetails()
+    {
+        return $this->hasMany(MonitoringPklDetail::class, 'siswa_id');
+    }
 }

@@ -4,6 +4,7 @@
   data-theme="theme-default" data-assets-path="{{ asset('assets') }}" data-template="vertical-menu-template-free">
 
 <head>
+  <title>@yield('title', 'Official - PKL - SMK NEGERI 1 BLEGA')</title>
 
   @include('partials.head-link')
 

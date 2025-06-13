@@ -165,8 +165,14 @@
       </li>
       <li class="menu-item {{ request()->is('pembimbing/kunjungan') ? 'active' : '' }}">
         <a href="{{ route('pembimbing.kunjungan.index') }}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-adjust "></i>
+          <i class="menu-icon tf-icons bx bx-add-to-queue "></i>
           <div data-i18n="Analytics">Kunjungan</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('pembimbing/riwayat') ? 'active' : '' }}">
+        <a href="{{ route('pembimbing.keperluan.riwayat') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-history "></i>
+          <div data-i18n="Analytics">Riwayat</div>
         </a>
       </li>
     @endif

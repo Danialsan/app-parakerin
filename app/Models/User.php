@@ -61,7 +61,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Dudi::class);
     }
-    public function pembimbing_sekolah()
+    public function pembimbingSekolah()
     {
         return $this->hasMany(PembimbingSekolah::class);
     }
