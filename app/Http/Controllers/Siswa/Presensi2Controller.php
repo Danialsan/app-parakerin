@@ -47,51 +47,56 @@ class Presensi2Controller extends Controller
      */
     public function store(Request $request)
     {
-        // Ambil waktu sekarang
-        $waktuSekarang = date('Y-m-d H:i:s');
+        try {
+            // Ambil waktu sekarang
+            $waktuSekarang = date('Y-m-d H:i:s');
 
-        // Ambil user
-        $user = Auth::user();
+            // Ambil user
+            $user = Auth::user();
 
-        // Ambil siswa
-        $siswa = $user->siswa;
+            // Ambil siswa
+            $siswa = $user->siswa;
 
-        // ambil dudi
-        $dudi = $siswa->dudi;
+            // ambil dudi
+            $dudi = $siswa->dudi;
 
-        $request->validate([
-            'absensi' => 'required|in:hadir,izin,sakit,libur,tidak hadir'
-        ]);
-
-        // jika absensi hadir
-        if ($request->absensi == 'hadir') {
-            PresensiSiswa::create([
-                'absensi' => $request->absensi,
-                'posisi_masuk' => $request->posisi_masuk,
-                'waktu_masuk' => $waktuSekarang,
-                'siswa_id' => $siswa->id
+            $request->validate([
+                'absensi' => 'required|in:hadir,izin,sakit,libur,tidak hadir'
             ]);
 
-            if ($dudi->posisi_kantor == null) {
-                $dudi->update([
-                    'radius_kantor' => 50,
-                    'posisi_kantor' => $request->posisi_masuk,
+            // jika absensi hadir
+            if ($request->absensi == 'hadir') {
+                PresensiSiswa::create([
+                    'absensi' => $request->absensi,
+                    'posisi_masuk' => $request->posisi_masuk,
+                    'waktu_masuk' => $waktuSekarang,
+                    'siswa_id' => $siswa->id
+                ]);
+
+                if ($dudi->posisi_kantor == null) {
+                    $dudi->update([
+                        'radius_kantor' => 50,
+                        'posisi_kantor' => $request->posisi_masuk,
+                    ]);
+                }
+
+            } else {
+                $request->validate([
+                    'keterangan' => 'required'
+                ]);
+
+                PresensiSiswa::create([
+                    'absensi' => $request->absensi,
+                    'keterangan' => $request->keterangan,
+                    'siswa_id' => $siswa->id
                 ]);
             }
 
-        } else {
-            $request->validate([
-                'keterangan' => 'required'
-            ]);
+            return redirect()->back()->with('success', "Absensi berhasil disimpan");
 
-            PresensiSiswa::create([
-                'absensi' => $request->absensi,
-                'keterangan' => $request->keterangan,
-                'siswa_id' => $siswa->id
-            ]);
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Absensi gagal di simpan');
         }
-
-        return redirect()->back();
     }
 
     /**
@@ -115,21 +120,25 @@ class Presensi2Controller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = Auth::user();
-        $siswa = $user->siswa;
-        $waktuSekarang = date('Y-m-d H:i:s');
+        try {
+            $user = Auth::user();
+            $siswa = $user->siswa;
+            $waktuSekarang = date('Y-m-d H:i:s');
 
-        $presensi = PresensiSiswa::findOrFail($id);
-        if ($presensi->siswa_id != $siswa->id) {
-            return redirect()->back();
+            $presensi = PresensiSiswa::findOrFail($id);
+            if ($presensi->siswa_id != $siswa->id) {
+                return redirect()->back();
+            }
+
+            $presensi->update([
+                'waktu_pulang' => $waktuSekarang,
+                'posisi_pulang' => $request->posisi_pulang
+            ]);
+
+            return redirect()->back()->with('success', 'Absensi pulang berhasil. Silahkan kembali lagi besok. Tetap semangat');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Absensi pulang gagal. Silahkan coba lagi.');
         }
-
-        $presensi->update([
-            'waktu_pulang' => $waktuSekarang,
-            'posisi_pulang' => $request->posisi_pulang
-        ]);
-
-        return redirect()->back();
     }
 
     /**

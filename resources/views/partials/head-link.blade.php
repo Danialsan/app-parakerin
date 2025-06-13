@@ -4,7 +4,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <link rel="icon" type="image/x-icon" href="{{ asset('assets/static/images/logo/mylogo.png') }}" />
+  <link rel="icon" type="image/x-icon" href="{{ asset('assets/static/images/logo/logo-app-edit.png') }}" />
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}" class="template-customizer-core-css" />

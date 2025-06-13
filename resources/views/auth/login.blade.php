@@ -1,24 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
+    @push('custom-style')
+        <style>
+            .attention {
+                position: relative;
+                padding: .75rem 1.25rem;
+                margin-bottom: 1rem;
+                border: 1px solid transparent;
+                border-radius: .25rem
+            }
+        </style>
+    @endpush
+
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
                 <!-- Register -->
                 <div class="card">
                     <div class="card-body">
-                        <div class="app-brand justify-content-center gap-4 align-items-center mb-4">
-                            <img src="{{ asset('assets/static/images/logo/logo-smeksaga.png') }}" width="120"
-                                alt="">
-                            <img src="{{ asset('assets/static/images/logo/mylogo.png') }}" width="55" alt="">
+                        <div class="app-brand justify-content-center gap-4 align-items-center mb-3">
+                            <img src="{{ asset('assets/static/images/logo/logo-guest.png') }}" width="150" alt="">
                         </div>
 
                         <div class="text-center mb-4">
-                            <h4 class="mb-1 fw-bold">Selamat datang di SIMAGANG</h4>
-                            <p>Sistem Informasi Magang</p>
+                            <h4 class="mb-1 fw-bold">Selamat datang di MAGANGKU</h4>
                         </div>
 
-                        <div class="alert alert-warning fw-light"
+                        <div class="attention alert-warning fw-light"
                             style="color: #566a7f; font-size: .9rem; background-color: #fef5e5; border: 1px solid #ffdfa5;"
                             role="alert">
                             Silahkan MASUK menggunakan No Induk Siswa sebagai Nama Pengguna dan Tanggal lahir Anda sebagai

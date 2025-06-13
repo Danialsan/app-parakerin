@@ -96,6 +96,10 @@
 
   @stack('custom-script')
 
+  @auth
+    @include('partials.pwa.footer-link')
+  @endauth
+
 </body>
 
 </html>
