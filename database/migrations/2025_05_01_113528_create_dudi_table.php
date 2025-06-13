@@ -13,7 +13,9 @@ return new class extends Migration {
         Schema::create('dudi', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('pimpinan_dudi')->nullable();
+            $table->string('nama_pembimbing')->nullable();
             $table->string('nama_perusahaan')->nullable();
+            $table->string('bidang_usaha')->nullable();
             $table->text('alamat_dudi')->nullable();
             $table->integer('radius_kantor')->nullable()->default(30);
             $table->string('posisi_kantor', 100)->nullable();

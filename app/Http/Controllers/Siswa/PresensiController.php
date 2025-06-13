@@ -3,35 +3,36 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dudi;
 use App\Models\PresensiSiswa;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
+        // Ambil waktu sekarang
         $waktuSekarang = date('Y-m-d');
-        $user = Auth::user();
-        $siswa = $user->siswa;
+
+        // ambil user
+        $siswa = Auth::user()->siswa->load('pengaturanPkl');
+
+        // ambil dudi
+        $dudi = $siswa->dudi;
+
+        // Ambil pengaturan pkl
+        $pengaturanPkl = $siswa->pengaturanPkl;
+
+        // $posisi_awal = PresensiSiswa::where('siswa_id', $siswa->id)->orderBy('created_at', 'asc')->where('posisi_masuk', '!=', NULL)->where('absensi', 'hadir')->first();
+        // $posisi_dudi = $dudi->posisi_kantor ?? '';
         $presensiHariIni = PresensiSiswa::whereDate('created_at', $waktuSekarang)->where('siswa_id', $siswa->id)->first();
 
-        return view('students.presensi', compact('presensiHariIni'));
+        return view('siswa.presensi', compact('presensiHariIni', 'dudi', 'siswa'));
     }
 
     /**
@@ -47,35 +48,56 @@ class PresensiController extends Controller
      */
     public function store(Request $request)
     {
-        $waktuSekarang = date('Y-m-d H:i:s');
-        $user = Auth::user();
-        $siswa = $user->siswa;
-        $request->validate([
-            'absensi' => 'required|in:hadir,izin,sakit,libur,tidak hadir'
-        ]);
+        try {
+            // Ambil waktu sekarang
+            $waktuSekarang = date('Y-m-d H:i:s');
 
-        if ($request->absensi == 'hadir') {
-            PresensiSiswa::create([
-                'absensi' => $request->absensi,
-                'posisi_masuk' => $request->posisi_masuk,
-                'waktu_masuk' => $waktuSekarang,
-                'siswa_id' => $siswa->id
-            ]);
-        } else {
+            // Ambil user
+            $user = Auth::user();
+
+            // Ambil siswa
+            $siswa = $user->siswa;
+
+            // ambil dudi
+            $dudi = $siswa->dudi;
+
             $request->validate([
-                'keterangan' => 'required'
+                'absensi' => 'required|in:hadir,izin,sakit,libur,tidak hadir'
             ]);
 
-            PresensiSiswa::create([
-                'absensi' => $request->absensi,
-                'keterangan' => $request->keterangan,
-                'siswa_id' => $siswa->id
-            ]);
+            // jika absensi hadir
+            if ($request->absensi == 'hadir') {
+                PresensiSiswa::create([
+                    'absensi' => $request->absensi,
+                    'posisi_masuk' => $request->posisi_masuk,
+                    'waktu_masuk' => $waktuSekarang,
+                    'siswa_id' => $siswa->id
+                ]);
+
+                if ($dudi->posisi_kantor == null) {
+                    $dudi->update([
+                        'radius_kantor' => 50,
+                        'posisi_kantor' => $request->posisi_masuk,
+                    ]);
+                }
+
+            } else {
+                $request->validate([
+                    'keterangan' => 'required'
+                ]);
+
+                PresensiSiswa::create([
+                    'absensi' => $request->absensi,
+                    'keterangan' => $request->keterangan,
+                    'siswa_id' => $siswa->id
+                ]);
+            }
+
+            return redirect()->back()->with('success', "Absensi berhasil disimpan");
+
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Absensi gagal di simpan');
         }
-
-        return redirect()->back();
-
-
     }
 
     /**
@@ -99,22 +121,25 @@ class PresensiController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        try {
+            $user = Auth::user();
+            $siswa = $user->siswa;
+            $waktuSekarang = date('Y-m-d H:i:s');
 
-        $user = Auth::user();
-        $siswa = $user->siswa;
-        $waktuSekarang = date('Y-m-d H:i:s');
+            $presensi = PresensiSiswa::findOrFail($id);
+            if ($presensi->siswa_id != $siswa->id) {
+                return redirect()->back();
+            }
 
-        $presensi = PresensiSiswa::findOrFail($id);
-        if ($presensi->siswa_id != $siswa->id) {
-            return redirect()->back();
+            $presensi->update([
+                'waktu_pulang' => $waktuSekarang,
+                'posisi_pulang' => $request->posisi_pulang
+            ]);
+
+            return redirect()->back()->with('success', 'Absensi pulang berhasil. Silahkan kembali lagi besok. Tetap semangat');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Absensi pulang gagal. Silahkan coba lagi.');
         }
-
-        $presensi->update([
-            'waktu_pulang' => $waktuSekarang,
-            'posisi_pulang' => $request->posisi_pulang
-        ]);
-
-        return redirect()->back();
     }
 
     /**
