@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\PembimbingSekolah;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use App\Imports\PembimbingSekolahImport;
 
 class PembimbingSekolahAdminController extends Controller
 {
@@ -16,6 +18,7 @@ class PembimbingSekolahAdminController extends Controller
     {
         $pembimbingSekolah = PembimbingSekolah::paginate(10);
         $user = User::where('role', 'pembimbing')->get();
+        // $jurusan = Jurusan::get();
         return view('admin.pembimbing-sekolah-admin.index',compact('pembimbingSekolah','user'));
     }
     public function store(Request $request)
@@ -38,7 +41,7 @@ class PembimbingSekolahAdminController extends Controller
             ]);
 
             // Upload foto jika ada, jika tidak pakai default
-            $fotoName = 'default.jpg';
+            $fotoName = 'default.png';
 
             if ($request->hasFile('foto')) {
                 $fotoFile = $request->file('foto');
@@ -127,7 +130,6 @@ class PembimbingSekolahAdminController extends Controller
         }
     }
 
-
     public function destroy(Request $request)
     {
         try {
@@ -135,7 +137,7 @@ class PembimbingSekolahAdminController extends Controller
             $user = User::findOrFail($cari->user_id);
 
             // Hapus foto jika bukan default
-            if ($cari->foto && $cari->foto !== 'default.jpg') {
+            if ($cari->foto && $cari->foto !== 'default.png') {
                 Storage::disk('public')->delete('foto-pembimbing/' . $cari->foto);
             }
             PembimbingSekolah::destroy($request->id);
@@ -147,15 +149,18 @@ class PembimbingSekolahAdminController extends Controller
     }
     public function import(Request $request)
     {
+        // dd($request->file('file'));
         $request->validate([
             'file' => 'required|file|mimes:xlsx,xls'
         ]);
 
         try {
             Excel::import(new PembimbingSekolahImport, $request->file('file'));
-            return redirect()->back()->with('success', 'Data Pembimbing Sekolah berhasil diimpor.');
-        }   catch (\Throwable $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimpor file. Pastikan format file sudah benar.');
+            return back()->with('success', 'Impor berhasil!');
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->failures()); // tampilkan detail validasi
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Kesalahan: ' . $e->getMessage());
         }
     }
 }

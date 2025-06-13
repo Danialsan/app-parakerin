@@ -2,20 +2,31 @@
 
 namespace App\Models;
 
+use App\Models\PengaturanPkl;
+use PhpParser\Node\Expr\FuncCall;
+use App\Models\PengaturanPklSiswa;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\FuncCall;
 
 class Siswa extends Model
 {
     use HasFactory, HasUuids;
     protected $table = 'siswa';
     protected $fillable = [
-        'name',
+        // 'name',
+        'id',
         'nis',
         'gender',
-        'user_id'
+        'user_id',
+        'pembimbing_sekolah_id',
+        'jurusan_id',
+        'alamat',
+        'telepon',
+        'foto',
+        'nama',
+        'kelas',
+        'dudi_id',
     ];
 
     public $timestamps = false;
@@ -34,5 +45,23 @@ class Siswa extends Model
     {
         return $this->belongsTo(Dudi::class);
     }
+    public function pembimbing_sekolah()
+    {
+        return $this->belongsTo(PembimbingSekolah::class);
+    }
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
+    }
+
+    public function pengaturanPkl()
+    {
+        return $this->hasOne(PengaturanPkl::class);
+    }
+
+
+
+
+
 
 }

@@ -65,5 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(PembimbingSekolah::class);
     }
+
+
+
     // public $timestamps = false;
 }

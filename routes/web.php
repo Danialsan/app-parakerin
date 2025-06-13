@@ -7,13 +7,17 @@ use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
 use App\Http\Controllers\Admin\DudiAdminController;
 use App\Http\Controllers\Siswa\Presensi2Controller;
+use App\Http\Controllers\Admin\SiswaAdminController;
 use App\Http\Controllers\Siswa\DownloadPdfController;
+use App\Http\Controllers\Admin\PengaturanPklController;
 use App\Http\Controllers\Siswa\RekapPresensiController;
+use App\Http\Controllers\Pembimbing\MonitoringController;
 use App\Http\Controllers\Admin\CapaianPembelajaranController;
 use App\Http\Controllers\Admin\PembimbingSekolahAdminController;
+use App\Http\Controllers\Pembimbing\BerandaPembimbingController;
 
 
-// Route::redirect('/', '/login');
+Route::redirect('/', '/login');
 
 Auth::routes();
 
@@ -49,9 +53,24 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     Route::resource('pembimbing-sekolah-admin', PembimbingSekolahAdminController::class)->only(['index','store','update','destroy']);
     Route::post('pembimbing-sekolah-admin/import', [PembimbingSekolahAdminController::class, 'import'])->name('pembimbing-sekolah-admin.import');
 
+    // siswa
+    Route::resource('siswa-admin', SiswaAdminController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::post('siswa-admin/import', [SiswaAdminController::class, 'import'])->name('siswa-admin.import');
+
+    // Pengaturan PKL
+    Route::resource('pengaturan-pkl', PengaturanPklController::class)->only(['index','store','update','destroy']);
+    Route::post('pengaturan-pkl/import', [PengaturanPklController::class, 'import'])->name('pengaturan-pkl.import');
+    Route::get('siswa-by-jurusan', [PengaturanPklController::class, 'getSiswaByJurusan'])->name('siswa.by.jurusan');
+    Route::get('pengaturan-pkl/download', [PengaturanPklController::class, 'download'])->name('pengaturan-pkl.download');
+
 });
 
 // Dudi
 Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
     Route::get('beranda', [DudiController::class, 'index'])->name('index');
+});
+
+Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {
+    Route::get('beranda', [BerandaPembimbingController::class, 'index'])->name('index');
+    Route::resource('kunjungan', MonitoringController::class)->only(['index', 'store', 'update','destroy']);
 });

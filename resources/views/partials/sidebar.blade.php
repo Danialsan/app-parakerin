@@ -140,7 +140,34 @@
           <div data-i18n="Analytics">Pembimbing Sekolah</div>
         </a>
       </li>
+      <li class="menu-item {{ request()->is('admin/siswa-admin') ? 'active' : '' }}">
+        <a href="{{ route('admin.siswa-admin.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-accessibility"></i>
+          <div data-i18n="Analytics">Siswa</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/pengaturan-pkl') ? 'active' : '' }}">
+        <a href="{{ route('admin.pengaturan-pkl.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+          <div data-i18n="Analytics">Pengaturan Pkl</div>
+        </a>
+      </li>
     @endif
 
+    @if (request()->is('pembimbing*'))
+      <!-- Dashboard -->
+      <li class="menu-item {{ request()->is('pembimbing/beranda') ? 'active' : '' }}">
+        <a href="{{ route('pembimbing.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Beranda</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('pembimbing/kunjungan') ? 'active' : '' }}">
+        <a href="{{ route('pembimbing.kunjungan.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-adjust "></i>
+          <div data-i18n="Analytics">Kunjungan</div>
+        </a>
+      </li>
+    @endif
   </ul>
 </aside>

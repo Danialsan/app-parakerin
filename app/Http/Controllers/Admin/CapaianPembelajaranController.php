@@ -75,33 +75,7 @@ class CapaianPembelajaranController extends Controller
             return redirect()->route('admin.capaian-pembelajaran.index')->with('error', 'Data gagal dihapus');
         }
     }
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,xls',
-        ]);
 
-        try {
-            Excel::import(new CapaianPembelajaranImport, $request->file('file'));
-
-            return redirect()->back()->with('success', 'Data capaian pembelajaran berhasil Unggah.');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            $errorMessages = [];
-
-            foreach ($failures as $failure) {
-                $row = $failure->row();
-                $attribute = $failure->attribute();
-                $errors = implode(', ', $failure->errors());
-                $errorMessages[] = "Baris {$row} - {$attribute}: {$errors}";
-            }
-
-            return redirect()->back()->with('error', implode("\n", $errorMessages));
-        } catch (\Throwable $e) {
-            Log::error('Gagal import CP: '.$e->getMessage());
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimpor file. Pastikan format file sudah benar.');
-        }
-    }
 
 
 }

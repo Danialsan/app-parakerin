@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
   <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Pembimbing Sekolah /</span> Daftar Pembimbing Sekolah
-    </h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Siswa /</span> Daftar Siswa</h4>
     @if (session('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle-fill"></i>
@@ -36,102 +35,142 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Nama Pembimbing</th>
-                <th>NIP</th>
-                <th>Jabatan</th>
+                <th>Nis</th>
+                <th>Nama</th>
+                <th>Kelas / Jurusan</th>
                 <th>Email</th>
+                <th>Jenis Kelamin</th>
+                <th>Alamat</th>
+                <th>Telepon</th>
                 <th>Foto</th>
-                <th class="text-end">Aksi</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($pembimbingSekolah as $item)
+              @foreach ($siswa as $item)
                 <tr>
-                  <td>{{ $item->nama_pembimbing }}</td>
-                  <td>{{ $item->nip ?? '-' }}</td>
-                  <td>{{ $item->jabatan }}</td>
+                  <td>{{ $item->nis }}</td>
+                  <td>{{ $item->nama }}</td>
+                  <td>{{ $item->kelas }} / {{ $item->jurusan->nama_jurusan }}</td>
                   <td>{{ $item->user->email }}</td>
-                  <td><img src="{{ asset('storage/foto-pembimbing/' . $item->foto) }}" alt="Foto Pembimbing"
-                      width="40" height="40" class="rounded-circle">
+                  <td>{{ $item->gender }}</td>
+                  <td>{{ $item->alamat }}</td>
+                  <td>{{ $item->telepon }}</td>
+                  <td><img src="{{ asset('storage/foto-siswa/' . $item->foto) }}" alt="Foto Siswa" width="30"
+                      height="30" class="rounded-circle">
                   </td>
                   <td>
                     <div class="d-grid gap-1 d-md-flex justify-content-md-end">
                       <button type="button" class="btn btn-sm btn-warning btnEdit" data-id="{{ $item->id }}"
-                        data-nama="{{ $item->nama_pembimbing }}" data-email="{{ $item->user->email }}"
-                        data-nip="{{ $item->nip }}" data-jabatan="{{ $item->jabatan }}"
+                        data-jurusan="{{ $item->jurusan->id }}" data-nis="{{ $item->nis }}"
+                        data-nama="{{ $item->nama }}" data-email="{{ $item->user->email }}"
+                        data-kelas="{{ $item->kelas }}" data-gender="{{ $item->gender }}"
+                        data-alamat="{{ $item->alamat }}" data-telepon="{{ $item->telepon }}"
                         data-foto="{{ $item->foto }}" data-bs-toggle="modal" data-bs-target="#editModal">
                         <i class="bx bx-pencil"></i>
                       </button>
 
                       <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
-                        data-nama="{{ $item->nama_pembimbing }}" data-nip="{{ $item->nip }}"
-                        data-jabatan="{{ $item->jabatan }}">
-                        <i class="bx bx-trash"></i>
+                        data-nama="{{ $item->nama }}"> <i class="bx bx-trash"></i>
                       </button>
                     </div>
-                  </td>
                 </tr>
-              @endforeach
-              @if ($pembimbingSekolah->isEmpty())
-                <tr>
-                  <td colspan="6" class="text-center">Tidak ada data!</td>
-                </tr>
-              @endif
+            </tbody>
+            @endforeach
+            @if ($siswa->isEmpty())
+              <tr>
+                <td colspan="9" class="text-center">Tidak ada data!</td>
+              </tr>
+            @endif
             </tbody>
           </table>
         </div>
-        <div class="d-flex justify-content-end">
-          {{ $pembimbingSekolah->links() }}
-        </div>
-        <!-- /.table-responsive -->
+        <!-- /.card-body -->
       </div>
-      <!-- /.card-body -->
+      <!-- /.card -->
     </div>
-    <!-- /.card -->
+    <!-- /.container-xxl -->
   </div>
 
   <!-- Modal Tambah Data -->
   <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <form action="{{ route('admin.pembimbing-sekolah-admin.store') }}" method="POST" enctype="multipart/form-data">
+    <div class="modal-dialog modal-lg">
+      <form action="{{ route('admin.siswa-admin.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalTambahLabel">Tambah Pembimbing Sekolah</h5>
+            <h5 class="modal-title" id="modalTambahLabel">Tambah Siswa</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="nama_pembimbing" class="form-label">Nama Pembimbing</label>
-              <input type="text" class="form-control @error('nama_pembimbing') is-invalid @enderror"
-                name="nama_pembimbing" id="nama_pembimbing" value="{{ old('nama_pembimbing') }}" required>
-              @error('nama_pembimbing')
+          <div class="modal-body row g-3">
+            <div class="col-md-6">
+              <label for="nis" class="form-label">NIS</label>
+              <input type="text" class="form-control @error('nis') is-invalid @enderror" name="nis" id="nis"
+                value="{{ old('nis') }}" required>
+              @error('nis')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
-            <div class="mb-3">
-              <label for="nip" class="form-label">NIP</label>
-              <input type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip"
-                value="{{ old('nip') }}" placeholder="Boleh dikosongkan">
-              @error('nip')
+            <div class="col-md-6">
+              <label for="nama" class="form-label">Nama</label>
+              <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama"
+                value="{{ old('nama') }}" required>
+              @error('nama')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
-            <div class="mb-3">
-              <label for="jabatan" class="form-label">Jabatan</label>
-              <select name="jabatan" id="jabatan" class="form-select" required>
-                <option disabled selected>-- Pilih Jabatan --</option>
-                <option value="Guru RPL">Guru RPL</option>
-                <option value="Guru TKJ">Guru TKJ</option>
-                <option value="Guru TSM">Guru TSM</option>
-                <option value="Guru AKL">Guru AKL</option>
-                <option value="Guru">Guru</option>
+            <div class="col-md-6">
+              <label for="kelas" class="form-label">Kelas</label>
+              <select name="kelas" id="kelas" class="form-select" required>
+                <option disabled selected>-- Pilih Kelas --</option>
+                <option value="XII">XII</option>
+                <option value="XI">XI</option>
+                <option value="X">X</option>
               </select>
-              @error('jabatan')
+              @error('kelas')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
+              <label for="jurusan" class="form-label">Jurusan</label>
+              <select name="jurusan" id="jurusan" class="form-select" required>
+                <option disabled selected>-- Pilih Jurusan --</option>
+                @foreach ($jurusan as $item)
+                  <option value="{{ $item->id }}">{{ $item->nama_jurusan }}</option>
+                @endforeach
+              </select>
+              @error('jurusan')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="col-md-6">
+              <label for="gender" class="form-label">Jenis Kelamin</label>
+              <select name="gender" id="gender" class="form-select" required>
+                <option disabled selected>-- Pilih Jenis Kelamin --</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+              @error('gender')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="col-md-6">
+              <label for="alamat" class="form-label">Alamat</label>
+              <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat"
+                id="alamat" value="{{ old('alamat') }}" required>
+              @error('alamat')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="col-md-6">
+              <label for="telepon" class="form-label">Telepon</label>
+              <input type="text" class="form-control @error('telepon') is-invalid @enderror" name="telepon"
+                id="telepon" value="{{ old('telepon') }}" required>
+              @error('telepon')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="col-md-6">
               <label for="email" class="form-label">Email</label>
               <input type="email" placeholder="example@example.com"
                 class="form-control @error('email') is-invalid @enderror" name="email" id="email"
@@ -139,8 +178,9 @@
               @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
+              <small>Email yang digunakan untuk login.</small>
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
               <label for="foto" class="form-label">Foto</label>
               <input type="file" name="foto" class="form-control" accept=".jpg,.png,.jpeg">
               <small>Format file yang diizinkan: jpg, png, jpeg (maks 2MB)</small>
@@ -154,7 +194,7 @@
       </form>
     </div>
   </div>
-  <!-- Modal Edit Pembimbing Sekolah -->
+  <!-- Modal Edit Siswa -->
   <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <form method="POST" enctype="multipart/form-data" id="editForm">
@@ -162,29 +202,51 @@
         @method('PUT')
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Edit Pembimbing Sekolah</h5>
+            <h5 class="modal-title">Ubah Siswa</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
           </div>
           <div class="modal-body">
+            <div class="col-md-6">
+              <label for="edit_nis" class="form-label">NIS</label>
+              <input type="text" name="nis" id="edit_nis" class="form-control" required>
+            </div>
             <div class="mb-3">
               <label for="edit_nama" class="form-label">Nama</label>
-              <input type="text" name="nama_pembimbing" id="edit_nama" class="form-control" required>
+              <input type="text" name="nama" id="edit_nama" class="form-control" required>
             </div>
             <div class="mb-3">
-              <label for="edit_nip" class="form-label">NIP</label>
-              <input type="text" name="nip" id="edit_nip" class="form-control"
-                placeholder="Boleh dikosongkan">
-            </div>
-            <div class="mb-3">
-              <label for="edit_jabatan" class="form-label">Jabatan</label>
-              <select name="jabatan" id="edit_jabatan" class="form-select" required>
-                <option disabled selected>-- Pilih Jabatan --</option>
-                <option value="Guru RPL">Guru RPL</option>
-                <option value="Guru TKJ">Guru TKJ</option>
-                <option value="Guru TSM">Guru TSM</option>
-                <option value="Guru AKL">Guru AKL</option>
-                <option value="Guru">Guru</option>
+              <label for="edit_kelas" class="form-label">Kelas</label>
+              <select name="kelas" id="edit_kelas" class="form-control" required>
+                <option disabled selected>-- Pilih Kelas --</option>
+                <option value="XII">XII</option>
+                <option value="XI">XI</option>
+                <option value="X">X</option>
               </select>
+            </div>
+            <div class="mb-3">
+              <label for="edit_jurusan" class="form-label">Jurusan</label>
+              <select name="jurusan" id="edit_jurusan" class="form-control" required>
+                <option disabled selected>-- Pilih Jurusan --</option>
+                @foreach ($jurusan as $item)
+                  <option value="{{ $item->id }}">{{ $item->nama_jurusan }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="edit_gender" class="form-label">Jenis Kelamin</label>
+              <select name="gender" id="edit_gender" class="form-control" required>
+                <option disabled selected>-- Pilih Jenis Kelamin --</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="edit_alamat" class="form-label">Alamat</label>
+              <input type="text" name="alamat" id="edit_alamat" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_telepon" class="form-label">Telepon</label>
+              <input type="text" name="telepon" id="edit_telepon" class="form-control" required>
             </div>
             <div class="mb-3">
               <label for="edit_email" class="form-label">Email</label>
@@ -206,14 +268,14 @@
       </form>
     </div>
   </div>
+  <!-- Modal Import -->
   <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="{{ route('admin.pembimbing-sekolah-admin.import') }}" method="POST"
-        enctype="multipart/form-data">
+      <form action="{{ route('admin.siswa-admin.import') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalImportLabel">Unggah Pembimbing Sekolah</h5>
+            <h5 class="modal-title" id="modalImportLabel">Unggah Siswa</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -223,12 +285,13 @@
             </div>
             <div class="alert alert-info" role="alert">
               Gunakan format sesuai template. <br>
-              <a href="{{ asset('template/template_pembimbing_sekolah.xlsx') }}"
-                class="btn btn-sm btn-outline-primary mt-2" download>
+              <a href="{{ asset('template/template_siswa.xlsx') }}" class="btn btn-sm btn-outline-primary mt-2"
+                download>
                 <i class="bx bx-download"></i> Unduh Template Excel
               </a>
             </div>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-success">Unggah</button>
@@ -245,30 +308,42 @@
       const form = document.getElementById('editForm');
       const inputNama = document.getElementById('edit_nama');
       const inputEmail = document.getElementById('edit_email');
-      const inputNip = document.getElementById('edit_nip');
+      const inputNis = document.getElementById('edit_nis');
       const inputFoto = document.getElementById('edit_foto');
       const previewFoto = document.getElementById('preview_edit_foto');
-      const inputJabatan = document.getElementById('edit_jabatan');
+      const inputJurusan = document.getElementById('edit_jurusan');
+      const inputKelas = document.getElementById('edit_kelas');
+      const inputAlamat = document.getElementById('edit_alamat');
+      const inputTelepon = document.getElementById('edit_telepon');
+      const inputGender = document.getElementById('edit_gender');
 
       btnEdits.forEach(button => {
         button.addEventListener('click', function() {
           const id = this.dataset.id;
           const nama = this.dataset.nama;
           const email = this.dataset.email;
-          const nip = this.dataset.nip;
+          const nis = this.dataset.nis;
           const foto = this.dataset.foto;
-          const jabatan = this.dataset.jabatan;
+          const jurusan = this.dataset.jurusan;
+          const kelas = this.dataset.kelas;
+          const alamat = this.dataset.alamat;
+          const telepon = this.dataset.telepon;
+          const gender = this.dataset.gender;
 
           // Set form action
-          form.action = `/admin/pembimbing-sekolah-admin/${id}`;
+          form.action = `/admin/siswa-admin/${id}`;
           inputNama.value = nama;
           inputEmail.value = email;
-          inputNip.value = nip;
-          inputJabatan.value = jabatan;
+          inputNis.value = nis;
+          inputJurusan.value = jurusan;
+          inputKelas.value = kelas;
+          inputAlamat.value = alamat;
+          inputTelepon.value = telepon;
+          inputGender.value = gender;
 
           // Set preview foto
           if (foto) {
-            previewFoto.src = `/storage/foto-pembimbing/${foto}`;
+            previewFoto.src = `/storage/foto-siswa/${foto}`;
             previewFoto.style.display = 'block';
           } else {
             previewFoto.src = '#';
@@ -294,20 +369,21 @@
       });
     });
   </script>
-
   <script>
     // --- Script Delete
     document.querySelectorAll('.btn-delete').forEach(button => {
       button.addEventListener('click', function() {
         const id = this.dataset.id;
         const nama = this.dataset.nama;
-        const nip = this.dataset.nip;
-        const jabatan = this.dataset.jabatan;
         const email = this.dataset.email;
+        const nis = this.dataset.nis;
+        const foto = this.dataset.foto;
+        const jurusan = this.dataset.jurusan;
+        const kelas = this.dataset.kelas;
 
         Swal.fire({
           title: 'Yakin ingin menghapus?',
-          text: `Pembimbing Sekolah "${nama}" akan dihapus permanen!`,
+          text: `Siswa "${nama}" akan dihapus permanen!`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#d33',
@@ -318,7 +394,7 @@
           if (result.isConfirmed) {
             // Kirim form hapus lewat JS
             const form = document.createElement('form');
-            form.action = `/admin/pembimbing-sekolah-admin/${id}`;
+            form.action = `/admin/siswa-admin/${id}`;
             form.method = 'POST';
             const token = document.createElement('input');
             token.type = 'hidden';

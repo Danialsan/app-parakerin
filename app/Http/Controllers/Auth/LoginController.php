@@ -43,7 +43,7 @@ class LoginController extends Controller
             return '/dudi/beranda';
         }
         if ($user->role === 'pembimbing') {
-            return '/pembimbing_sekolah/beranda';
+            return '/pembimbing/beranda';
         }
 
         // abort(403, 'Role tidak dikenali');
