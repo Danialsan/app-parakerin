@@ -9,7 +9,7 @@ class DownloadPdfController extends Controller
 {
     public function index()
     {
-        return view('students.download-pdf');
+        return view('siswa.download-pdf');
     }
 
 }

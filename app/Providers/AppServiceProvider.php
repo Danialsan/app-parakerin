@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,9 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('foto_profil', $foto_profil);
         });
+
+        Paginator::useBootstrap();
+
     }
 
 }

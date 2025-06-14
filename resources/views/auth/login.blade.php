@@ -29,7 +29,7 @@
                             <h4 class="mb-1 fw-bold">Selamat datang di MAGANGKU</h4>
                         </div>
 
-                        <div class="attention alert-warning fw-light text-center"
+                        <div class="attention alert-info fw-light text-center"
                             style="color: #566a7f; font-size: .9rem; background-color: #fef5e5; border: 1px solid #ffdfa5;"
                             role="alert">
                             <p>Aplikasi Official -

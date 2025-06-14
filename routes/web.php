@@ -72,7 +72,7 @@ Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
 
 Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {
     Route::get('beranda', [BerandaPembimbingController::class, 'index'])->name('index');
-    Route::resource('kunjungan', MonitoringController::class)->only(['index', 'store', 'update','destroy']);
+    Route::resource('kunjungan', MonitoringController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::get('monitoring/siswa', [MonitoringController::class, 'getSiswaByDudi'])->name('siswa.by.dudi');
     Route::get('monitoring/keperluan-used', [MonitoringController::class, 'getKeperluanUsed'])->name('keperluan.used');
     Route::get('kunjungan/riwayat', [MonitoringController::class, 'riwayat'])->name('keperluan.riwayat');
