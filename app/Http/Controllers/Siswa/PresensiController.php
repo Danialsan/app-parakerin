@@ -26,13 +26,13 @@ class PresensiController extends Controller
         $dudi = $siswa->dudi;
 
         // Ambil pengaturan pkl
-        $pengaturanPkl = $siswa->pengaturanPkl;
+        $pengaturan_pkl = $siswa->pengaturanPkl;
 
         // $posisi_awal = PresensiSiswa::where('siswa_id', $siswa->id)->orderBy('created_at', 'asc')->where('posisi_masuk', '!=', NULL)->where('absensi', 'hadir')->first();
         // $posisi_dudi = $dudi->posisi_kantor ?? '';
         $presensiHariIni = PresensiSiswa::whereDate('created_at', $waktuSekarang)->where('siswa_id', $siswa->id)->first();
 
-        return view('siswa.presensi', compact('presensiHariIni', 'dudi', 'siswa'));
+        return view('siswa.presensi', compact('presensiHariIni', 'dudi', 'siswa', 'pengaturan_pkl', 'waktuSekarang'));
     }
 
     /**
@@ -74,7 +74,7 @@ class PresensiController extends Controller
                     'siswa_id' => $siswa->id
                 ]);
 
-                if ($dudi->posisi_kantor == null) {
+                if ($dudi->posisi_kantor == null || $dudi->posisi_kantor == '0') {
                     $dudi->update([
                         'radius_kantor' => 50,
                         'posisi_kantor' => $request->posisi_masuk,

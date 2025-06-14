@@ -17,8 +17,8 @@ class SiswaSeeder extends Seeder
     {
 
         $user1 = User::create([
-            'name' => 'siswa1',
-            'email' => 'siswa@gmail.com',
+            'name' => 'coba',
+            'email' => 'coba@gmail.com',
             'password' => '12345',
             'role' => 'siswa'
         ]);
@@ -37,7 +37,7 @@ class SiswaSeeder extends Seeder
             'alamat' => 'Nambangan',
             'telepon' => '081234567890',
             'foto' => null,
-            'nama' => 'Achmad',
+            'nama' => 'Coba',
             'kelas' => 'XIII',
             'dudi_id' => null,
         ]);
