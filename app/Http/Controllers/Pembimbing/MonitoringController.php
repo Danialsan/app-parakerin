@@ -138,10 +138,13 @@ class MonitoringController extends Controller
             abort(403, 'Tidak diizinkan');
         }
 
+        // dd($monitoring->foto);
+
         // Hapus file dari storage/app/foto-monitoring/
-        if ($monitoring->foto && Storage::exists($monitoring->foto)) {
-            Storage::delete($monitoring->foto);
+        if ($monitoring->foto && Storage::disk('public')->exists($monitoring->foto)) {
+            Storage::disk('public')->delete($monitoring->foto);
         }
+
 
         $monitoring->delete();
 

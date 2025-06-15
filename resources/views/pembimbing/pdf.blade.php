@@ -104,6 +104,25 @@
       <td><strong>Tanggal</strong></td>
       <td>: {{ \Carbon\Carbon::parse($monitoring->created_at)->translatedFormat('d F Y') }}</td>
     </tr>
+    <tr>
+      <td><strong>Dokumentasi</strong></td>
+      <td>:</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: center;">
+        @if ($monitoring->foto)
+          @php
+            $fotoPath = public_path('storage/' . $monitoring->foto);
+            $fotoType = pathinfo($fotoPath, PATHINFO_EXTENSION);
+            $fotoData = file_get_contents($fotoPath);
+            $fotoBase64 = 'data:image/' . $fotoType . ';base64,' . base64_encode($fotoData);
+          @endphp
+          <img src="{{ $fotoBase64 }}" alt="Foto Kunjungan"
+            style="max-width: 300px; max-height: 200px; border: 1px solid #000; margin-top: 5px;">
+        @endif
+      </td>
+    </tr>
+
   </table>
 
   <br>
