@@ -12,18 +12,19 @@ class RekapPresensiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // request
+        $halaman = $request->input('halaman', 2);
         // Ambil user
         $user = Auth::user();
 
         // Ambil siswa
         $siswa = $user->siswa;
 
-        $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->paginate(10);
+        $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->paginate($halaman);
 
-
-        return view('students.rekap-presensi');
+        return view('siswa.rekap-presensi', compact('rekap_presensi'));
     }
 
     /**
