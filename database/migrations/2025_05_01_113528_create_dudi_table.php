@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('alamat_dudi')->nullable();
             $table->integer('radius_kantor')->nullable()->default(30);
             $table->string('posisi_kantor', 100)->nullable();
+            $table->string('foto')->nullable();
             $table->foreignId('user_id')->constrained('users', 'id')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -42,7 +42,10 @@
 
             <div class="card">
                 <h5 class="card-header">Rekap Presensi</h5>
-
+                <form method="get">
+                    <input type="text" name="cari" class="form-control" placeholder="Cari absensi"
+                        value="{{ $cari }}">
+                </form>
 
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -53,6 +56,7 @@
                                     <th>Keterangan</th>
                                     <th>Waktu Datang</th>
                                     <th>Waktu Pulang</th>
+                                    <th>Waktu Absen</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,6 +77,7 @@
                                             {{ $presensi->keterangan ?? '-' }}</td>
                                         <td>{{ $presensi->waktu_masuk ?? '-' }}</td>
                                         <td>{{ $presensi->waktu_pulang ?? '-' }}</td>
+                                        <td>{{ $presensi->created_at->format('d-m-Y') ?? '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

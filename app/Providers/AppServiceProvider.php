@@ -31,14 +31,14 @@ class AppServiceProvider extends ServiceProvider
                 $folder = match ($user->role) {
                     'siswa' => 'foto-siswa',
                     'pembimbing' => 'foto-pembimbing',
-                    'dudi' => 'foto-dudi',
+                    // 'dudi' => 'foto-dudi',
                     default => 'foto-lain'
                 };
 
                 $foto = match ($user->role) {
                     'siswa' => $user->siswa?->foto,
                     'pembimbing' => $user->pembimbing?->foto,
-                    'dudi' => $user->dudi?->foto,
+                    // 'dudi' => $user->dudi?->foto,
                     default => null
                 };
 

@@ -1,39 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Siswa;
+namespace App\Http\Controllers\Dudi;
 
 use App\Http\Controllers\Controller;
-use App\Models\PresensiSiswa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RekapPresensiController extends Controller
+class berandaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-
-        $cari = $request->query('cari');
-
-
-        // request
-        // $halaman = $request->input('halaman', 2);
-        // Ambil user
-        $user = Auth::user();
-
-        // Ambil siswa
-        $siswa = $user->siswa;
-
-        if (!empty($cari)) {
-            $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->where('absensi', 'LIKE', '%' . $cari . '%')->paginate(2);
-        } else {
-            $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->paginate(2);
-        }
-
-
-        return view('siswa.rekap-presensi', compact('rekap_presensi', 'cari'));
+        return view('dudi.beranda');
     }
 
     /**
