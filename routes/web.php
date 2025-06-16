@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dudi\JurnalSiswaController;
+use App\Http\Controllers\Dudi\PresensiSiswaController;
 use App\Http\Controllers\Siswa\PresensiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dudi\DudiController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\Pembimbing\MonitoringController;
 use App\Http\Controllers\Admin\CapaianPembelajaranController;
 use App\Http\Controllers\Admin\PembimbingSekolahAdminController;
 use App\Http\Controllers\Pembimbing\BerandaPembimbingController;
-use App\Http\Controllers\Dudi\berandaController as berandaDudiController;
+use App\Http\Controllers\Dudi\BerandaController as BerandaDudiController;
 
 Route::redirect('/', '/login');
 
@@ -67,7 +68,9 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
 
 // Dudi
 Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
-    Route::get('beranda', [berandaDudiController::class, 'index'])->name('index');
+    Route::get('beranda', [BerandaDudiController::class, 'index'])->name('index');
+    Route::get('presensi-siswa', [PresensiSiswaController::class, 'index'])->name('presensi-siswa');
+    Route::get('jurnal-siswa', [JurnalSiswaController::class, 'index'])->name('jurnal-siswa');
 });
 
 Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {

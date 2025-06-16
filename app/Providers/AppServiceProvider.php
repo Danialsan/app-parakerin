@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 $foto = match ($user->role) {
                     'siswa' => $user->siswa?->foto,
                     'pembimbing' => $user->pembimbing?->foto,
-                    // 'dudi' => $user->dudi?->foto,
+                    'dudi' => $user->dudi?->foto,
                     default => null
                 };
 

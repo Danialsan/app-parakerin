@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Dudi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class BerandaController extends Controller
+class JurnalSiswaController extends Controller
 {
+
     public function index()
     {
-        return view('dudi.beranda');
+        return view('dudi.jurnal-siswa');
     }
+
+
 }
