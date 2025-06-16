@@ -63,4 +63,9 @@ class Siswa extends Model
     {
         return $this->hasMany(MonitoringPklDetail::class, 'siswa_id');
     }
+    public function jurnalHarian()
+    {
+        return $this->hasMany(JurnalHarian::class);
+    }
+
 }

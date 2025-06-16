@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Rekap Presensi - {{ $siswa->nama }}</title>
+  <title>Rekap Jurnal Harian - {{ $siswa->nama }}</title>
   <style>
     body {
       font-family: sans-serif;
@@ -96,8 +96,6 @@
 </head>
 
 <body>
-
-  {{-- KOP SURAT --}}
   <div class="kop">
     @php
       $path = public_path('storage/logo/logo-provinsi.png');
@@ -113,28 +111,29 @@
     <p>Telepon (031) 30431272</p>
     <div class="garis"></div>
   </div>
+
   <!-- JUDUL -->
   <div class="judul">
-    <h3><strong>REKAP PRESENSI SISWA</strong></h3>
+    <h3><strong>REKAP JURNAL HARIAN SISWA</strong></h3>
     <h3>TAHUN PELAJARAN 2025 - 2026</h3>
   </div>
 
-  {{-- INFO SISWA --}}
-  <table style="border: none;">
+  <!-- IDENTITAS -->
+  <table class="info-table" style="margin-bottom: 10px;">
     <tr>
-      <td style="border: none; width: 25%;">Nama</td>
-      <td style="border: none;">: {{ $siswa->nama }}</td>
+      <td width="20%"><strong>Nama</strong></td>
+      <td>: {{ $siswa->nama }}</td>
     </tr>
     <tr>
-      <td style="border: none;">Kelas</td>
-      <td style="border: none;">: {{ $siswa->kelas }}</td>
+      <td><strong>Kelas</strong></td>
+      <td>: {{ $siswa->kelas }}</td>
     </tr>
     <tr>
-      <td style="border: none;">Jurusan</td>
-      <td style="border: none;">: {{ $siswa->jurusan->nama_jurusan ?? '-' }}</td>
+      <td><strong>Jurusan</strong></td>
+      <td>: {{ $siswa->jurusan->nama_jurusan ?? '-' }}</td>
     </tr>
     <tr>
-      <td style="border: none;">Periode</td>
+      <td style="border: none;"><strong>Periode</strong></td>
       <td style="border: none;">
         : {{ \Carbon\Carbon::parse($tanggal_awal)->translatedFormat('d F Y') }} -
         {{ \Carbon\Carbon::parse($tanggal_akhir)->translatedFormat('d F Y') }}
@@ -142,35 +141,45 @@
     </tr>
   </table>
 
-  {{-- TABEL PRESENSI --}}
-  <h4 class="text-center">Rekapitulasi Presensi PKL</h4>
+  <!-- TABEL JURNAL -->
   <table class="table-data">
     <thead>
       <tr>
-        <th>No</th>
-        <th>Absensi</th>
-        <th>Keterangan</th>
-        <th>Jam Masuk</th>
-        <th>Jam Pulang</th>
+        <th style="width: 5%;">No</th>
+        <th style="width: 20%;">Tanggal</th>
+        <th style="width: 30%;">Capaian Pembelajaran</th>
+        <th style="width: 30%;">Kegiatan</th>
+        <th style="width: 15%;">Dokumentasi</th>
+        <th style="width: 15%;">Status</th>
       </tr>
     </thead>
     <tbody>
-      @forelse ($presensi as $i => $item)
+      @foreach ($jurnals as $i => $jurnal)
         <tr>
           <td>{{ $i + 1 }}</td>
-          <td>{{ ucfirst($item->absensi) }}</td>
-          <td>{{ $item->keterangan ?? '-' }}</td>
-          <td>{{ \Carbon\Carbon::parse($item->waktu_masuk)->format('d/m/Y H:i') }}</td>
-          <td>{{ \Carbon\Carbon::parse($item->waktu_pulang)->format('d/m/Y H:i') }}</td>
+          <td>{{ \Carbon\Carbon::parse($jurnal->tanggal)->translatedFormat('d F Y') }}</td>
+          <td>{{ $jurnal->capaianPembelajaran->deskripsi_cp ?? '-' }}</td>
+          <td>{{ $jurnal->kegiatan }}</td>
+          <td>
+            @if ($jurnal->foto)
+              @php
+                $fotoPath = public_path('storage/' . $jurnal->foto);
+                $fotoType = pathinfo($fotoPath, PATHINFO_EXTENSION);
+                $fotoData = file_get_contents($fotoPath);
+                $fotoBase64 = 'data:image/' . $fotoType . ';base64,' . base64_encode($fotoData);
+              @endphp
+              <img src="{{ $fotoBase64 }}" width="50">
+            @else
+              -
+            @endif
+          <td>{{ $jurnal->verifikasi_pembimbing ? 'Terverifikasi' : 'Belum' }}</td>
         </tr>
-      @empty
-        <tr>
-          <td colspan="5" class="text-center">Tidak ada data presensi!</td>
-        </tr>
-      @endforelse
+      @endforeach
+      @if ($jurnals->isEmpty())
+        <td colspan="6" class="text-center">Tidak ada Jurnal, Pastikan Jurnal Harian Sudah Terverifikasi</td>
+      @endif
     </tbody>
   </table>
-
   <br><br><br>
 
   @php

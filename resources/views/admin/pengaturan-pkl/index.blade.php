@@ -22,11 +22,12 @@
 
     <div class="card">
       <div class="card-header">
-        <form action="{{ route('admin.pengaturan-pkl.index') }}" method="GET">
-          <div class="row g-2 align-items-end">
-            <!-- Filter Jurusan -->
-            <div class="col-12 col-md-3">
-              <select name="jurusan_id" class="form-select form-select-sm">
+        <div class="row g-2 align-items-end">
+          <!-- Form Filter -->
+          <div class="col-md-3">
+            <form action="{{ route('admin.pengaturan-pkl.index') }}" method="GET" id="filterForm">
+              <select name="jurusan_id" class="form-select form-select-sm"
+                onchange="document.getElementById('filterForm').submit()">
                 <option value="">-- Semua Jurusan --</option>
                 @foreach ($jurusan as $j)
                   <option value="{{ $j->id }}" {{ request('jurusan_id') == $j->id ? 'selected' : '' }}>
@@ -34,42 +35,41 @@
                   </option>
                 @endforeach
               </select>
-            </div>
-
-            <!-- Filter DUDI -->
-            <div class="col-12 col-md-3">
-              <select name="dudi_id" class="form-select form-select-sm">
-                <option value="">-- Semua DUDI --</option>
-                @foreach ($dudi as $d)
-                  <option value="{{ $d->id }}" {{ request('dudi_id') == $d->id ? 'selected' : '' }}>
-                    {{ $d->nama_perusahaan }}
-                  </option>
-                @endforeach
-              </select>
-            </div>
-
-            <!-- Tombol Cari dan Reset -->
-            <div class="col-12 col-md-3 d-flex gap-2">
-              <button type="submit" class="btn btn-sm btn-outline-secondary w-100">
-                <i class="bx bx-search me-1"></i> Cari
-              </button>
-              <a href="{{ route('admin.pengaturan-pkl.index') }}" class="btn btn-sm btn-outline-secondary w-100">
-                <i class="bx bx-refresh me-1"></i> Reset
-              </a>
-            </div>
-
-            <!-- Tombol Aksi -->
-            <div class="col-12 col-md-3 d-flex justify-content-md-end gap-2">
-              <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                <i class="bx bx-plus me-1"></i> Tambah Data
-              </button>
-              <a href="{{ route('admin.pengaturan-pkl.download', request()->only(['jurusan_id', 'dudi_id'])) }}"
-                class="btn btn-sm btn-outline-success">
-                <i class="bx bx-download me-1"></i> Unduh Data
-              </a>
-            </div>
           </div>
-        </form>
+
+          <div class="col-md-3">
+            <select name="dudi_id" class="form-select form-select-sm"
+              onchange="document.getElementById('filterForm').submit()">
+              <option value="">-- Semua DUDI --</option>
+              @foreach ($dudi as $d)
+                <option value="{{ $d->id }}" {{ request('dudi_id') == $d->id ? 'selected' : '' }}>
+                  {{ $d->nama_perusahaan }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-sm btn-outline-secondary w-100">
+              <i class="bx bx-search me-1"></i> Cari
+            </button>
+            <a href="{{ route('admin.pengaturan-pkl.index') }}" class="btn btn-sm btn-outline-secondary w-100">
+              <i class="bx bx-refresh me-1"></i> Reset
+            </a>
+            </form> {{-- form ditutup di sini --}}
+          </div>
+
+          <!-- Tombol Tambah & Unduh -->
+          <div class="col-md-3 d-flex justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+              <i class="bx bx-plus me-1"></i> Tambah Data
+            </button>
+            <a href="{{ route('admin.pengaturan-pkl.download', request()->only(['jurusan_id', 'dudi_id'])) }}"
+              class="btn btn-sm btn-outline-success">
+              <i class="bx bx-download me-1"></i> Unduh Data
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class="table-responsive">

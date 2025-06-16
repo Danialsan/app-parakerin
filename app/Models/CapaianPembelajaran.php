@@ -19,4 +19,9 @@ class CapaianPembelajaran extends Model
     {
         return $this->belongsTo(Jurusan::class);
     }
+    public function jurnalHarian()
+    {
+        return $this->hasMany(JurnalHarian::class);
+    }
+
 }

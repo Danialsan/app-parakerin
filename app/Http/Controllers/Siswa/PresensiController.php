@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Http\Controllers\Controller;
 use App\Models\Dudi;
-use App\Models\PresensiSiswa;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
+use App\Models\PresensiSiswa;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -149,4 +151,10 @@ class PresensiController extends Controller
     {
         //
     }
+
+
+
+
+
+
 }
