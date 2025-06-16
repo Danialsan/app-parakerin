@@ -96,7 +96,7 @@
 
         <div class="text-end mt-3">
           <button type="submit" id="btn-simpan" class="btn btn-primary">
-            Simpan
+            <i class="bx bx-save"></i> Simpan Kunjungan
           </button>
 
         </div>

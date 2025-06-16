@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Dudi\JurnalSiswaController;
-use App\Http\Controllers\Dudi\PresensiSiswaController;
-use App\Http\Controllers\Siswa\PresensiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
+use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Admin\DudiAdminController;
 use App\Http\Controllers\Admin\SiswaAdminController;
 use App\Http\Controllers\Siswa\DownloadPdfController;
+use App\Http\Controllers\Siswa\JurnalHarianController;
 use App\Http\Controllers\Admin\PengaturanPklController;
 use App\Http\Controllers\Siswa\RekapPresensiController;
 use App\Http\Controllers\Pembimbing\MonitoringController;
@@ -32,7 +31,16 @@ Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function ()
     Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
     Route::resource('/presensi', PresensiController::class)->only(['index', 'store', 'update']);
     Route::resource('rekap-presensi', RekapPresensiController::class)->only(['index']);
-    Route::get('download-pdf', [DownloadPdfController::class, 'index'])->name('download-pdf');
+    // Route::get('download-pdf', [DownloadPdfController::class, 'index'])->name('download-pdf');
+    Route::get('presensi/download', [RekapPresensiController::class, 'download'])->name('presensi.download');
+    Route::get('rekap-presensi/riwayat', [RekapPresensiController::class, 'riwayat'])->name('presensi.riwayat');
+
+    // Jurnal
+    Route::resource('jurnal', JurnalHarianController::class)->only(['index', 'store','destroy']);
+    Route::get('jurnal/riwayat', [JurnalHarianController::class, 'riwayat'])->name('jurnal.riwayat');
+    Route::get('jurnal/download', [JurnalHarianController::class, 'download'])->name('jurnal.download');
+    Route::get('cek-jurnal', [JurnalController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
+
 });
 
 // Admin

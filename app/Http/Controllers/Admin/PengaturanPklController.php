@@ -171,7 +171,7 @@ class PengaturanPklController extends Controller
 
         $pdf = Pdf::loadView('admin.pengaturan-pkl.pdf', compact('data'))->setPaper('a4', 'landscape');
 
-        return $pdf->download('pengaturan-pkl' . date(YmdHis) . '.pdf');
+        return $pdf->download('pengaturan-pkl' . date('Y-m-d') . '.pdf');
     }
 
 
