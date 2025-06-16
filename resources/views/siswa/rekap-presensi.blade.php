@@ -64,13 +64,16 @@
                                     <tr>
                                         <td>
                                             @if ($presensi->absensi == 'hadir')
-                                                <span class="badge bg-label-primary">{{ $presensi->absensi }}</span>
+                                                <span
+                                                    class="badge bg-label-primary">{{ ucfirst($presensi->absensi) }}</span>
                                             @elseif ($presensi->absensi == 'sakit')
-                                                <span class="badge bg-label-danger">{{ $presensi->absensi }}</span>
+                                                <span class="badge bg-label-danger">{{ ucfirst($presensi->absensi) }}</span>
                                             @elseif ($presensi->absensi == 'libur')
-                                                <span class="badge bg-label-success">{{ $presensi->absensi }}</span>
+                                                <span
+                                                    class="badge bg-label-success">{{ ucfirst($presensi->absensi) }}</span>
                                             @elseif ($presensi->absensi == 'izin')
-                                                <span class="badge bg-label-warning">{{ $presensi->absensi }}</span>
+                                                <span
+                                                    class="badge bg-label-warning">{{ ucfirst($presensi->absensi) }}</span>
                                             @endif
                                         </td>
                                         <td style="white-space: normal; word-break: break-word">

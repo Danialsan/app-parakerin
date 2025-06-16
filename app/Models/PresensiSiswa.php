@@ -13,8 +13,15 @@ class PresensiSiswa extends Model
     protected $fillable = ['absensi', 'keterangan', 'posisi_masuk', 'posisi_pulang', 'waktu_masuk', 'waktu_pulang', 'siswa_id'];
     public $timestamps = true;
 
+
+    protected $casts = [
+        'waktu_masuk' => 'datetime',
+        'waktu_pulang' => 'datetime',
+    ];
+
     public function siswa()
     {
-        $this->belongsTo(Siswa::class);
+        return
+            $this->belongsTo(Siswa::class);
     }
 }
