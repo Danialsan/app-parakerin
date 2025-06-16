@@ -6,7 +6,9 @@
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> Presensi /</span> Rekap Presensi </h4>
         <div class="row">
           <!--  awal Rekap presensi -->
-
+          @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+          @endif
           @php
             $nama_nama_bulan = [
                 ['no' => '01', 'bulan' => 'Januari'],
