@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function dudi()
     {
-        return $this->hasMany(Dudi::class);
+        return $this->hasOne(Dudi::class);
     }
     public function pembimbingSekolah()
     {

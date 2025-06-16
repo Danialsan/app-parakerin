@@ -17,17 +17,26 @@ class RekapPresensiController extends Controller
      */
     public function index(Request $request)
     {
+
+        $cari = $request->query('cari');
+
+
         // request
-        $halaman = $request->input('halaman', 2);
+        // $halaman = $request->input('halaman', 2);
         // Ambil user
         $user = Auth::user();
 
         // Ambil siswa
         $siswa = $user->siswa;
 
-        $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->paginate($halaman);
+        if (!empty($cari)) {
+            $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->where('absensi', 'LIKE', '%' . $cari . '%')->paginate(2);
+        } else {
+            $rekap_presensi = PresensiSiswa::where('siswa_id', $siswa->id)->paginate(2);
+        }
 
-        return view('siswa.rekap-presensi', compact('rekap_presensi'));
+
+        return view('siswa.rekap-presensi', compact('rekap_presensi', 'cari'));
     }
 
     public function download(Request $request)
