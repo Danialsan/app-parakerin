@@ -65,6 +65,7 @@
                                     <th>Keterangan</th>
                                     <th>Waktu Datang</th>
                                     <th>Waktu Pulang</th>
+                                    <th>Waktu Absen</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,9 +87,11 @@
                                         </td>
                                         <td class="keterangan-td ">
                                             {{ ucfirst($presensi->keterangan ?? '-') }}</td>
-                                        <td>{{ $presensi->waktu_masuk ? $presensi->waktu_masuk->translatedFormat('l, d F Y H:i') : '-' }}
+                                        <td>{{ $presensi->waktu_masuk ? $presensi->waktu_masuk->diffForHumans() : '-' }}
                                         </td>
-                                        <td>{{ $presensi->waktu_pulang ? $presensi->waktu_pulang->translatedFormat('l, d F Y H:i') : '-' }}
+                                        <td>{{ $presensi->waktu_pulang ? $presensi->waktu_pulang->diffForHumans() : '-' }}
+                                        </td>
+                                        <td>{{ $presensi->created_at ? $presensi->created_at->translatedFormat('l, d F Y H:i') : '-' }}
                                         </td>
                                     </tr>
                                 @endforeach

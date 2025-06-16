@@ -98,7 +98,7 @@
             </li>
 
             <!-- Download -->
-            <li class="menu-header small text-uppercase">
+            {{-- <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Download</span>
             </li>
             <li class="menu-item {{ request()->is('siswa/download-pdf') ? 'active' : '' }}">
@@ -106,7 +106,7 @@
                     <i class="menu-icon tf-icons bx bxs-file-pdf"></i>
                     <div data-i18n="Analytics">Download PDF</div>
                 </a>
-            </li>
+            </li> --}}
         @endif
 
         @if (request()->is('admin*'))
