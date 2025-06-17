@@ -119,6 +119,12 @@
           <div data-i18n="Analytics">Rekap Kunjungan</div>
         </a>
       </li>
+      <li class="menu-item {{ request()->is('admin/informasi') ? 'active' : '' }}">
+        <a href="{{ route('admin.informasi') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-info-circle"></i>
+          <div data-i18n="Analytics">Informasi</div>
+        </a>
+      </li>
     @endif
 
     @if (request()->is('pembimbing*'))

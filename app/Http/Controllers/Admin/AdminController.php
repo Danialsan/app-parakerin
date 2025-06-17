@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Models\Dudi;
 use App\Models\Siswa;
+use App\Models\Informasi;
 use App\Models\JurnalHarian;
 use Illuminate\Http\Request;
 use App\Models\MonitoringPkl;
@@ -44,54 +45,39 @@ class AdminController extends Controller
             'jumlah_presensi_hari_ini',
             'jumlah_monitoring'
         ));
-        // return view('admin.beranda', compact('jumlah_dudi', 'jumlah_pembimbing', 'jumlah_siswa'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function informasi()
     {
-        //
+        $informasi = Informasi::paginate(10);
+        return view('admin.informasi', compact('informasi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    public function destroy($id)
+    {
+        $informasi = Informasi::findOrFail($id);
+        $informasi->delete();
+
+        return response()->json(['message' => 'Informasi berhasil dihapus.']);
+    }
+
     public function store(Request $request)
     {
-        //
-    }
+        try {
+            $request->validate([
+                'target_role' => 'nullable|string',
+                'isi' => 'required|string',
+            ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            Informasi::create([
+                'target_role' => $request->target_role ?? null,
+                'isi' => $request->isi,
+            ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return redirect()->route('admin.informasi')->with('success', 'Informasi berhasil disimpan.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.informasi')->with('error', 'Informasi gagal disimpan.');
+        }
     }
 }
