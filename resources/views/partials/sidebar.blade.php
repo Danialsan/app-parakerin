@@ -69,37 +69,13 @@
       </li>
 
       <!-- Presensi -->
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Absensi</span>
+      </li>
       <li class="menu-item {{ request()->is('siswa/presensi') ? 'active' : '' }}">
         <a href="{{ route('siswa.presensi.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-          <div data-i18n="Analytics">Presensi </div>
-        </a>
-      </li>
-      <li class="menu-item {{ request()->is('siswa/jurnal') ? 'active' : '' }}">
-        @if ($sudah_presensi_hari_ini)
-          <a href="{{ route('siswa.jurnal.index') }}" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-book-add"></i>
-            <div data-i18n="Jurnal Harian">Jurnal Harian</div>
-          </a>
-        @else
-          <a href="javascript:void(0);" class="menu-link position-relative" style="cursor:not-allowed;"
-            data-bs-toggle="tooltip" data-bs-placement="right" title="Isi presensi terlebih dahulu">
-            <i class="menu-icon tf-icons bx bx-book-add text-muted"></i>
-            <div class="text-muted" data-i18n="Jurnal Harian">Jurnal Harian</div>
-
-            <span class="position-absolute top-50 start-25 translate-middle-y badge rounded-pill bg-danger d-md-none">
-              X
-              <span class="visually-hidden">Belum presensi</span>
-            </span>
-
-          </a>
-        @endif
-      </li>
-
-      <li class="menu-item {{ request()->is('siswa/riwayat') ? 'active' : '' }}">
-        <a href="{{ route('siswa.jurnal.riwayat') }}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-history"></i>
-          <div data-i18n="Analytics">Rekap Jurnal</div>
+          <div data-i18n="Analytics">Presensi</div>
         </a>
       </li>
       <li class="menu-item {{ request()->is('siswa/rekap-presensi') ? 'active' : '' }}">
@@ -108,8 +84,78 @@
           <div data-i18n="Analytics">Rekap Presensi</div>
         </a>
       </li>
+      <li class="menu-item">
+        <a href="" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-notepad"></i>
+          <div data-i18n="Analytics">Jurnal</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-edit-alt"></i>
+          <div data-i18n="Analytics">Laporan</div>
+        </a>
+      </li>
 
-      {{-- <li class="menu-item {{ request()->is('siswa/download-pdf') ? 'active' : '' }}">
+      <!-- Download -->
+      {{-- <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Download</span>
+            </li>
+            <li class="menu-item {{ request()->is('siswa/download-pdf') ? 'active' : '' }}">
+                <a href="{{ route('siswa.download-pdf') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-file-pdf"></i>
+                    <div data-i18n="Analytics">Download PDF</div>
+                </a>
+            </li> --}}
+    @endif
+
+    @if (request()->is('admin*'))
+      <!-- Dashboard -->
+      <li class="menu-item {{ request()->is('admin/beranda') ? 'active' : '' }}">
+        <a href="{{ route('admin.beranda') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Beranda</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/jurusan') ? 'active' : '' }}">
+        <a href="{{ route('admin.jurusan.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-adjust "></i>
+          <div data-i18n="Analytics">Jurusan</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/capaian-pembelajaran') ? 'active' : '' }}">
+        <a href="{{ route('admin.capaian-pembelajaran.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-target-lock "></i>
+          <div data-i18n="Analytics">Capaian Pembelajaran</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/dudi-admin') ? 'active' : '' }}">
+        <a href="{{ route('admin.dudi-admin.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-factory"></i>
+          <div data-i18n="Analytics">Dudi</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/pembimbing-sekolah-admin') ? 'active' : '' }}">
+        <a href="{{ route('admin.pembimbing-sekolah-admin.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-user-circle"></i>
+          <div data-i18n="Analytics">Pembimbing Sekolah</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/siswa-admin') ? 'active' : '' }}">
+        <a href="{{ route('admin.siswa-admin.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-accessibility"></i>
+          <div data-i18n="Analytics">Siswa</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/pengaturan-pkl') ? 'active' : '' }}">
+        <a href="{{ route('admin.pengaturan-pkl.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+          <div data-i18n="Analytics">Pengaturan Pkl</div>
+        </a>
+      </li>
+    @endif
+
+    {{-- <li class="menu-item {{ request()->is('siswa/download-pdf') ? 'active' : '' }}">
         <a href="{{ route('siswa.download-pdf') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-file-pdf"></i>
           <div data-i18n="Analytics">Download PDF</div>

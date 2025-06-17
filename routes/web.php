@@ -8,7 +8,8 @@ use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Admin\DudiAdminController;
 use App\Http\Controllers\Admin\RekapJurnaController;
 use App\Http\Controllers\Admin\SiswaAdminController;
-use App\Http\Controllers\Siswa\DownloadPdfController;
+use App\Http\Controllers\Dudi\JurnalSiswaController;
+use App\Http\Controllers\Dudi\PresensiSiswaController;
 use App\Http\Controllers\Siswa\JurnalHarianController;
 use App\Http\Controllers\Admin\PengaturanPklController;
 use App\Http\Controllers\Siswa\RekapPresensiController;
@@ -40,7 +41,7 @@ Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function ()
     Route::get('rekap-presensi/riwayat', [RekapPresensiController::class, 'riwayat'])->name('presensi.riwayat');
 
     // Jurnal
-    Route::resource('jurnal', JurnalHarianController::class)->only(['index', 'store','destroy']);
+    Route::resource('jurnal', JurnalHarianController::class)->only(['index', 'store', 'destroy']);
     Route::get('jurnal/riwayat', [JurnalHarianController::class, 'riwayat'])->name('jurnal.riwayat');
     Route::get('jurnal/download', [JurnalHarianController::class, 'download'])->name('jurnal.download');
     Route::get('cek-jurnal', [JurnalController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
