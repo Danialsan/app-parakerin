@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Dudi;
+use App\Models\Siswa;
+use App\Models\JurnalHarian;
 use Illuminate\Http\Request;
+use App\Models\MonitoringPkl;
+use App\Models\PresensiSiswa;
+use App\Models\PembimbingSekolah;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -18,7 +25,26 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.beranda');
+        $jumlah_dudi = Dudi::count();
+        $jumlah_pembimbing = PembimbingSekolah::count();
+        $jumlah_siswa = Siswa::count();
+        $jumlah_monitoring = MonitoringPkl::count();
+
+        // Data hari ini
+        $hariIni = Carbon::today();
+
+        $jumlah_jurnal_hari_ini = JurnalHarian::whereDate('tanggal', $hariIni)->count();
+        $jumlah_presensi_hari_ini = PresensiSiswa::whereDate('waktu_masuk', $hariIni)->count();
+
+        return view('admin.beranda', compact(
+            'jumlah_dudi',
+            'jumlah_pembimbing',
+            'jumlah_siswa',
+            'jumlah_jurnal_hari_ini',
+            'jumlah_presensi_hari_ini',
+            'jumlah_monitoring'
+        ));
+        // return view('admin.beranda', compact('jumlah_dudi', 'jumlah_pembimbing', 'jumlah_siswa'));
     }
 
     /**
