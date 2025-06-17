@@ -5,7 +5,9 @@
 
 <head>
   <title>@yield('title', 'Official - PKL - SMK NEGERI 1 BLEGA')</title>
-
+  @auth
+    @include('partials.pwa.head-link')
+  @endauth
   @include('partials.head-link')
 
   @stack('custom-style')
