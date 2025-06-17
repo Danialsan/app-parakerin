@@ -6,15 +6,19 @@ use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Siswa\BerandaController;
 use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Admin\DudiAdminController;
+use App\Http\Controllers\Admin\RekapJurnaController;
 use App\Http\Controllers\Admin\SiswaAdminController;
 use App\Http\Controllers\Siswa\DownloadPdfController;
 use App\Http\Controllers\Siswa\JurnalHarianController;
 use App\Http\Controllers\Admin\PengaturanPklController;
 use App\Http\Controllers\Siswa\RekapPresensiController;
+use App\Http\Controllers\Admin\RekapMonitoringController;
 use App\Http\Controllers\Pembimbing\MonitoringController;
 use App\Http\Controllers\Admin\CapaianPembelajaranController;
+use App\Http\Controllers\Pembimbing\PembimbingJurnalController;
 use App\Http\Controllers\Admin\PembimbingSekolahAdminController;
 use App\Http\Controllers\Pembimbing\BerandaPembimbingController;
+use App\Http\Controllers\Pembimbing\PresensiPembimbingController;
 use App\Http\Controllers\Dudi\BerandaController as BerandaDudiController;
 
 Route::redirect('/', '/login');
@@ -61,10 +65,14 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     // Pembimbing Sekolah
     Route::resource('pembimbing-sekolah-admin', PembimbingSekolahAdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('pembimbing-sekolah-admin/import', [PembimbingSekolahAdminController::class, 'import'])->name('pembimbing-sekolah-admin.import');
+    Route::get('rekap-monitoring', [RekapMonitoringController::class, 'rekap'])->name('pembimbing-sekolah-admin.rekap-monitoring');
+    Route::get('rekap-monitoring/download', [RekapMonitoringController::class, 'download'])->name('pembimbing-sekolah-admin.rekap-monitoring.download');
 
     // siswa
     Route::resource('siswa-admin', SiswaAdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('siswa-admin/import', [SiswaAdminController::class, 'import'])->name('siswa-admin.import');
+    Route::get('siswa-admin/rekap-jurnal', [RekapJurnaController::class, 'index'])->name('siswa-admin.rekap-jurnal');
+    Route::get('siswa-admin/rekap-jurnal/download', [RekapJurnaController::class, 'download'])->name('siswa-admin.rekap-jurnal.download');
 
     // Pengaturan PKL
     Route::resource('pengaturan-pkl', PengaturanPklController::class)->only(['index', 'store', 'update', 'destroy']);
@@ -88,5 +96,10 @@ Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing
     Route::get('monitoring/keperluan-used', [MonitoringController::class, 'getKeperluanUsed'])->name('keperluan.used');
     Route::get('kunjungan/riwayat', [MonitoringController::class, 'riwayat'])->name('keperluan.riwayat');
     Route::get('keperluan/unduh/{id}', [MonitoringController::class, 'unduh'])->name('keperluan.unduh');
+    Route::get('verifikasi-jurnal', [PembimbingJurnalController::class, 'index'])->name('verifikasi-jurnal.index');
+    Route::post('verifikasi-jurnal/{jurnal}', [PembimbingJurnalController::class, 'verifikasi'])->name('verifikasi-jurnal.verifikasi');
+    Route::get('pembimbing/presensi', [PresensiPembimbingController::class, 'presensiSiswaBimbingan'])->name('presensi.index');
+    Route::post('verifikasi-jurnal/{id}/batal', [PembimbingJurnalController::class, 'batal'])
+    ->name('verifikasi-jurnal.batal');
 
 });

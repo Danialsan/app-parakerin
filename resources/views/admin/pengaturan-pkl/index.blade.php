@@ -50,11 +50,11 @@
           </div>
 
           <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-sm btn-outline-secondary w-100">
-              <i class="bx bx-search me-1"></i> Cari
+            <button type="submit" class="btn btn-sm btn-outline-primary w-100">
+              <i class="bx bx-filter"></i> Filter
             </button>
             <a href="{{ route('admin.pengaturan-pkl.index') }}" class="btn btn-sm btn-outline-secondary w-100">
-              <i class="bx bx-refresh me-1"></i> Reset
+              <i class="bx bx-refresh"></i> Reset
             </a>
             </form> {{-- form ditutup di sini --}}
           </div>

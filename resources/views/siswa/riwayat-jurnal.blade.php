@@ -74,7 +74,7 @@
             <thead>
               <tr>
                 <th>Tanggal</th>
-                <th>Capaian</th>
+                <th>Capaian Pembelajaran</th>
                 <th>Kegiatan</th>
                 <th>Foto</th>
                 <th>Status</th>
@@ -99,6 +99,17 @@
                   <td>
                     @if ($jurnal->verifikasi_pembimbing)
                       <span class="badge bg-success">Terverifikasi</span>
+                      @if ($jurnal->catatan_pembimbing)
+                        <br>
+                        <small class="text-muted fst-italic ps-2 border-start border-2 border-secondary">
+                          {{ $jurnal->catatan_pembimbing }}
+                        </small>
+                      @else
+                        <br>
+                        <small class="text-muted fst-italic ps-2 border-start border-2 border-secondary">
+                          ---
+                        </small>
+                      @endif
                     @else
                       <span class="badge bg-danger">Belum</span>
                     @endif

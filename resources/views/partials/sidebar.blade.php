@@ -161,6 +161,18 @@
           <div data-i18n="Analytics">Pengaturan Pkl</div>
         </a>
       </li>
+      <li class="menu-item {{ request()->is('admin/siswa-admin/rekap-jurnal') ? 'active' : '' }}">
+        <a href="{{ route('admin.siswa-admin.rekap-jurnal') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-list-check"></i>
+          <div data-i18n="Analytics">Rekap Jurnal Siswa</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('admin/pembimbing-sekolah-admin.rekap-monitoring') ? 'active' : '' }}">
+        <a href="{{ route('admin.pembimbing-sekolah-admin.rekap-monitoring') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-list-check"></i>
+          <div data-i18n="Analytics">Rekap Kunjungan</div>
+        </a>
+      </li>
     @endif
 
     @if (request()->is('pembimbing*'))
@@ -169,6 +181,18 @@
         <a href="{{ route('pembimbing.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Beranda</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('pembimbing/verifikasi-jurnal.index') ? 'active' : '' }}">
+        <a href="{{ route('pembimbing.verifikasi-jurnal.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-list-check"></i>
+          <div data-i18n="Analytics">Jurnal Siswa</div>
+        </a>
+      </li>
+      <li class="menu-item {{ request()->is('pembimbing/presensi.index') ? 'active' : '' }}">
+        <a href="{{ route('pembimbing.presensi.index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-calendar-check"></i>
+          <div data-i18n="Analytics">Presensi Siswa</div>
         </a>
       </li>
       <li class="menu-item {{ request()->is('pembimbing/kunjungan') ? 'active' : '' }}">
@@ -180,7 +204,7 @@
       <li class="menu-item {{ request()->is('pembimbing/riwayat') ? 'active' : '' }}">
         <a href="{{ route('pembimbing.keperluan.riwayat') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-history "></i>
-          <div data-i18n="Analytics">Riwayat</div>
+          <div data-i18n="Analytics">Riwayat Kunjungan</div>
         </a>
       </li>
     @endif

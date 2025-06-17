@@ -37,4 +37,10 @@ class MonitoringPkl extends Model
     {
         return $this->hasMany(MonitoringPklDetail::class, 'monitoring_pkl_id');
     }
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
+
+
 }

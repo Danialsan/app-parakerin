@@ -172,7 +172,18 @@
             @else
               -
             @endif
-          <td>{{ $jurnal->verifikasi_pembimbing ? 'Terverifikasi' : 'Belum' }}</td>
+          <td>{{ $jurnal->verifikasi_pembimbing ? 'Terverifikasi' : 'Belum' }}
+            <br><br>
+            <small><strong>Catatan Pembimbing:</strong></small>
+            @if ($jurnal->catatan_pembimbing)
+              <br>
+              <small class="text-muted fst-italic ps-2 border-start border-2 border-secondary">
+                {{ $jurnal->catatan_pembimbing }}
+              </small>
+            @else
+              ---
+            @endif
+          </td>
         </tr>
       @endforeach
       @if ($jurnals->isEmpty())

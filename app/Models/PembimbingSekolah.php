@@ -23,5 +23,10 @@ class PembimbingSekolah extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function pengaturanPkl()
+    {
+        return $this->hasMany(PengaturanPkl::class, 'pembimbing_sekolah_id');
+    }
+
 
 }
