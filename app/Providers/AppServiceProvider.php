@@ -3,6 +3,7 @@ namespace App\Providers;
 
 
 use Carbon\Carbon;
+use App\Models\Informasi;
 use App\Models\PresensiSiswa;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,15 @@ class AppServiceProvider extends ServiceProvider
                     'foto_profil' => $foto_profil,
                     'sudah_presensi_hari_ini' => $sudah_presensi_hari_ini
                 ]);
+
+                $user = Auth::user();
+                $role = $user->role ?? null;
+                $informasi =Informasi::where(function ($q) use ($role) {
+                    $q->whereNull('target_role')
+                      ->orWhere('target_role', $role);
+                })->latest()->get();
+
+                $view->with('informasi_list', $informasi);
             });
 
             Paginator::useBootstrap();

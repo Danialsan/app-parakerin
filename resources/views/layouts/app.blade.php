@@ -34,7 +34,29 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    .informasi-toast {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      z-index: 1055;
+      min-width: 300px;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
   </style>
+
 </head>
 
 <body>
@@ -103,6 +125,15 @@
       tooltipTriggerList.forEach(function(tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl)
       })
+    });
+  </script>
+  <script>
+    // Auto hide toast setelah 7 detik
+    document.querySelectorAll('.informasi-toast').forEach((toast, index) => {
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+      }, 7000 + (index * 1000)); // delay bertahap kalau banyak
     });
   </script>
 
