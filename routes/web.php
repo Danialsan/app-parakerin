@@ -98,6 +98,9 @@ Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
     Route::prefix('siswa')->group(function () {
         Route::get('presensi', [PresensiSiswaController::class, 'index'])->name('presensi');
         Route::get('jurnal', [JurnalSiswaController::class, 'index'])->name('jurnal');
+        Route::get('pengaturan', [BerandaDudiController::class, 'pengaturan'])->name('pengaturan');
+        Route::post('pengaturan', [BerandaDudiController::class, 'updatePengaturan'])->name('pengaturan.update');
+
     });
 });
 
