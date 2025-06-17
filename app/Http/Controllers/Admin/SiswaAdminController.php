@@ -142,13 +142,23 @@ class SiswaAdminController extends Controller
                 'foto' => $fotoName,
             ]);
 
-            // Update juga di tabel users jika email berubah
+            // Update di tabel users jika email berubah atau reset password dicentang
             if ($request->email && $siswa->user_id) {
                 $user = User::find($siswa->user_id);
-                if ($user && $user->email !== $request->email) {
-                    $user->update([
-                        'email' => $request->email,
-                    ]);
+                if ($user) {
+                    $updateData = [];
+
+                    if ($user->email !== $request->email) {
+                        $updateData['email'] = $request->email;
+                    }
+
+                    if ($request->has('reset_password')) {
+                        $updateData['password'] = Hash::make('siswa123'); // default password
+                    }
+
+                    if (!empty($updateData)) {
+                        $user->update($updateData);
+                    }
                 }
             }
 

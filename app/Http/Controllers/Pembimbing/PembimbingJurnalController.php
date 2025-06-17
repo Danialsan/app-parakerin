@@ -9,25 +9,32 @@ use App\Http\Controllers\Controller;
 
 class PembimbingJurnalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pembimbing = auth()->user()->pembimbingSekolah->first();
-        $pembimbingId = $pembimbing?->id;
+        $pembimbingId = auth()->user()->pembimbingSekolah->first()?->id;
 
-        // dd($pembimbingId);
-        // Ambil siswa yang dibimbing
-        $siswaIds = PengaturanPkl::where('pembimbing_sekolah_id', $pembimbingId)
-            ->pluck('siswa_id');
+        // Ambil semua jurnal siswa yang dibimbing
+        $query = JurnalHarian::with(['siswa'])
+            ->whereIn('siswa_id', function ($q) use ($pembimbingId) {
+                $q->select('siswa_id')
+                  ->from('pengaturan_pkl')
+                  ->where('pembimbing_sekolah_id', $pembimbingId);
+            });
 
-            // dd($siswaIds);
+        // Filter berdasarkan status verifikasi
+        if ($request->filled('status')) {
+            if ($request->status === 'terverifikasi') {
+                $query->where('verifikasi_pembimbing', true);
+            } elseif ($request->status === 'belum') {
+                $query->where('verifikasi_pembimbing', false);
+            }
+        }
 
-        $jurnals = JurnalHarian::with(['siswa'])
-            ->whereIn('siswa_id', $siswaIds)
-            ->latest('tanggal')
-            ->paginate(10);
+        $jurnals = $query->latest('tanggal')->paginate(10)->withQueryString();
 
         return view('pembimbing.verifikasi-jurnal', compact('jurnals'));
     }
+
 
     public function verifikasi(Request $request, JurnalHarian $jurnal)
     {

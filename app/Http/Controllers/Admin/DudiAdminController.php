@@ -109,11 +109,25 @@ class DudiAdminController extends Controller
                 'nama_pembimbing' => $request->nama_pembimbing,
             ]);
 
-            // Update data user
-            User::find($userId)->update([
-                'name' => $request->nama_perusahaan,
-                'email' => $request->email,
-            ]);
+            // Update di tabel users jika email berubah atau reset password dicentang
+            if ($request->email && $dudi->user_id) {
+                $user = User::find($dudi->user_id);
+                if ($user) {
+                    $updateData = [];
+
+                    if ($user->email !== $request->email) {
+                        $updateData['email'] = $request->email;
+                    }
+
+                    if ($request->has('reset_password')) {
+                        $updateData['password'] = Hash::make('dudi123'); // default password
+                    }
+
+                    if (!empty($updateData)) {
+                        $user->update($updateData);
+                    }
+                }
+            }
 
             return redirect()->route('admin.dudi-admin.index')->with('success', 'Data berhasil disimpan.');
         } catch (\Exception $e) {

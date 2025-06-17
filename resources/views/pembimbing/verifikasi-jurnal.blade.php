@@ -8,6 +8,26 @@
     </h4>
 
     <div class="card">
+      <div class="card-header">
+        <form method="GET" class="row g-1 mb-2">
+          <div class="col-md-4">
+            <select name="status" class="form-select form-select-sm">
+              <option value="">-- Semua Status --</option>
+              <option value="terverifikasi" {{ request('status') == 'terverifikasi' ? 'selected' : '' }}>Terverifikasi
+              </option>
+              <option value="belum" {{ request('status') == 'belum' ? 'selected' : '' }}>Belum</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-sm btn-outline-primary">
+              <i class="bx bx-filter"></i> Filter
+            </button>
+            <a href="{{ route('pembimbing.verifikasi-jurnal.index') }}" class="btn btn-sm btn-outline-secondary"><i
+                class="bx bx-refresh"></i> Reset</a>
+          </div>
+        </form>
+
+      </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-striped">
@@ -67,7 +87,7 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="7" class="text-center">Belum ada jurnal untuk diverifikasi.</td>
+                  <td colspan="7" class="text-center">Data Jurnal Tidak Ada.</td>
                 </tr>
               @endforelse
             </tbody>

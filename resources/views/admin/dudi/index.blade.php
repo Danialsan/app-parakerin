@@ -197,6 +197,11 @@
               <input type="email" placeholder="example@example.com" class="form-control" name="email"
                 id="edit_email" required>
             </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="edit_reset_password" name="reset_password">
+              <label class="form-check-label" for="edit_reset_password">Reset password ke default?</label>
+              <small class="text-muted d-block">Password akan direset ke <code>dudi123</code></small>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

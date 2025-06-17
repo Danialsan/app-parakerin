@@ -192,6 +192,11 @@
               <label for="edit_email" class="form-label">Email</label>
               <input type="email" name="email" id="edit_email" class="form-control" required>
             </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="edit_reset_password" name="reset_password">
+              <label class="form-check-label" for="edit_reset_password">Reset password ke default?</label>
+              <small class="text-muted d-block">Password akan direset ke <code>pembimbing123</code></small>
+            </div>
 
             <div class="mb-3">
               <label for="edit_foto" class="form-label">Foto (opsional)</label>
@@ -296,7 +301,6 @@
       });
     });
   </script>
-
   <script>
     // --- Script Delete
     document.querySelectorAll('.btn-delete').forEach(button => {

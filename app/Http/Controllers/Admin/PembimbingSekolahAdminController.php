@@ -114,13 +114,23 @@ class PembimbingSekolahAdminController extends Controller
                 'foto' => $fotoName,
             ]);
 
-            // Update juga di tabel users jika email berubah
+            // Update di tabel users jika email berubah atau reset password dicentang
             if ($request->email && $pembimbing->user_id) {
                 $user = User::find($pembimbing->user_id);
-                if ($user && $user->email !== $request->email) {
-                    $user->update([
-                        'email' => $request->email,
-                    ]);
+                if ($user) {
+                    $updateData = [];
+
+                    if ($user->email !== $request->email) {
+                        $updateData['email'] = $request->email;
+                    }
+
+                    if ($request->has('reset_password')) {
+                        $updateData['password'] = Hash::make('pembimbing123'); // default password
+                    }
+
+                    if (!empty($updateData)) {
+                        $user->update($updateData);
+                    }
                 }
             }
 
@@ -129,6 +139,7 @@ class PembimbingSekolahAdminController extends Controller
             return redirect()->route('admin.pembimbing-sekolah-admin.index')->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
         }
     }
+
 
     public function destroy(Request $request)
     {

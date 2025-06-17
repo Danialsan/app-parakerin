@@ -40,7 +40,7 @@
 
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered table-sm">
+          <table class="table table-striped">
             <thead class="table-light">
               <tr>
                 <th>No</th>
@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($monitoring as $i => $m)
+              @forelse ($monitoring as $i => $m)
                 <tr>
                   <td>{{ $monitoring->firstItem() + $i }}</td>
                   <td>{{ \Carbon\Carbon::parse($m->monitoring->tanggal)->format('d-m-Y') }}</td>
@@ -71,7 +71,11 @@
                     @endif
                   </td>
                 </tr>
-              @endforeach
+              @empty
+                <tr>
+                  <td colspan="8" class="text-center">Tidak ada data!</td>
+                </tr>
+              @endforelse
 
             </tbody>
           </table>
