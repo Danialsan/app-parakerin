@@ -44,7 +44,7 @@ Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function ()
     Route::resource('jurnal', JurnalHarianController::class)->only(['index', 'store', 'destroy']);
     Route::get('jurnal/riwayat', [JurnalHarianController::class, 'riwayat'])->name('jurnal.riwayat');
     Route::get('jurnal/download', [JurnalHarianController::class, 'download'])->name('jurnal.download');
-    Route::get('cek-jurnal', [JurnalController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
+    // Route::get('cek-jurnal', [JurnalController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
 
 });
 
@@ -86,8 +86,10 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
 // Dudi
 Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
     Route::get('beranda', [BerandaDudiController::class, 'index'])->name('index');
-    Route::get('presensi-siswa', [PresensiSiswaController::class, 'index'])->name('presensi-siswa');
-    Route::get('jurnal-siswa', [JurnalSiswaController::class, 'index'])->name('jurnal-siswa');
+    Route::prefix('siswa')->group(function () {
+        Route::get('presensi', [PresensiSiswaController::class, 'index'])->name('presensi');
+        Route::get('jurnal', [JurnalSiswaController::class, 'index'])->name('jurnal');
+    });
 });
 
 Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {
@@ -101,6 +103,6 @@ Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing
     Route::post('verifikasi-jurnal/{jurnal}', [PembimbingJurnalController::class, 'verifikasi'])->name('verifikasi-jurnal.verifikasi');
     Route::get('pembimbing/presensi', [PresensiPembimbingController::class, 'presensiSiswaBimbingan'])->name('presensi.index');
     Route::post('verifikasi-jurnal/{id}/batal', [PembimbingJurnalController::class, 'batal'])
-    ->name('verifikasi-jurnal.batal');
+        ->name('verifikasi-jurnal.batal');
 
 });

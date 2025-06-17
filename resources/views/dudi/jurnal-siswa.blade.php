@@ -13,15 +13,36 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Absensi</th>
-                                    <th>Keterangan</th>
-                                    <th>Waktu Datang</th>
-                                    <th>Waktu Pulang</th>
-                                    <th>Waktu Absen</th>
+                                    <th>Tanggal</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Capaian Pembelajaran</th>
+                                    <th>Kegiatan</th>
+                                    <th>Foto</th>
+                                    <th>Verifikasi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse ($rekap_jurnal as $jurnal)
+                                    <tr>
+                                        <td>{{ $jurnal->tanggal->translatedFormat('l, d F Y') }}</td>
+                                        <td>{{ $jurnal->siswa->nama }}</td>
+                                        <td>{{ $jurnal->capaianPembelajaran->deskripsi_cp }}</td>
+                                        <td>{{ $jurnal->kegiatan }}</td>
+                                        <td>{{ $jurnal->foto ?? '-' }}</td>
+                                        <td>
+                                            @if ($jurnal->verifikasi_pembimbing == 0)
+                                                <span class="badge bg-label-danger"> Belum </span>
+                                            @else
+                                                <span class="badge bg-label-success"> Sudah </span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Data Jurnal Tidak Ada.</td>
+                                    </tr>
+                                @endforelse
+
                             </tbody>
                         </table>
                         <div class="mt-3 d-flex justify-content-end">
