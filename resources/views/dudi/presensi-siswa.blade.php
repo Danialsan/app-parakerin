@@ -2,7 +2,7 @@
 
 @section('title', 'Dudi - PKL SMKN 1 BLEGA')
 
-@push('custom-style')
+{{-- @push('custom-style')
     <style>
         .keterangan-td {
             white-space: normal;
@@ -46,8 +46,7 @@
             }
         }
     </style>
-@endpush
-
+@endpush --}}
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> Absensi /</span> Presensi Siswa </h4>
@@ -85,7 +84,7 @@
                                                     class="badge bg-label-warning">{{ ucfirst($presensi->absensi) }}</span>
                                             @endif
                                         </td>
-                                        <td class="keterangan-td ">
+                                        <td style="white-space: normal; word-break: break-word;">
                                             {{ ucfirst($presensi->keterangan ?? '-') }}</td>
                                         <td>{{ $presensi->waktu_masuk ? $presensi->waktu_masuk->diffForHumans() : '-' }}
                                         </td>

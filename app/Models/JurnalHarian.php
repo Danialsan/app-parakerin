@@ -21,6 +21,10 @@ class JurnalHarian extends Model
         'catatan_pembimbing',
     ];
 
+    protected $casts = [
+        'tanggal' => 'date'
+    ];
+
 
     public function siswa()
     {
