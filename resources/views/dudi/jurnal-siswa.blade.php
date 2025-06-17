@@ -7,7 +7,39 @@
             <!--  awal Rekap presensi -->
 
             <div class="card">
-                <h5 class="card-header">Rekap Presensi</h5>
+                <div class="card-header">
+                    <div class="row g-3 align-items-end">
+                        <!-- Form Filter -->
+                        <div class="col-md-9">
+                            <form method="GET" class="row g-2">
+                                <!-- Tanggal Awal -->
+                                <div class="col-md-4">
+                                    <label for="tanggal_awal" class="form-label">Tanggal Awal</label>
+                                    <input type="date" name="tanggal_awal" class="form-control form-control-sm"
+                                        value="{{ request('tanggal_awal') }}">
+                                </div>
+
+                                <!-- Tanggal Akhir -->
+                                <div class="col-md-4">
+                                    <label for="tanggal_akhir" class="form-label">Tanggal Akhir</label>
+                                    <input type="date" name="tanggal_akhir" class="form-control form-control-sm"
+                                        value="{{ request('tanggal_akhir') }}">
+                                </div>
+
+                                <!-- Tombol Filter dan Reset -->
+                                <div class="col-md-4 d-flex align-items-end gap-2">
+                                    <button class="btn btn-sm btn-outline-primary" type="submit">
+                                        <i class="bx bx-filter"></i> Filter
+                                    </button>
+                                    <a href="{{ route('dudi.jurnal') }}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bx bx-reset"></i> Reset
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <table class="table table-striped">
@@ -46,6 +78,7 @@
                             </tbody>
                         </table>
                         <div class="mt-3 d-flex justify-content-end">
+                            {{ $rekap_jurnal->links() }}
                         </div>
                     </div>
                 </div>

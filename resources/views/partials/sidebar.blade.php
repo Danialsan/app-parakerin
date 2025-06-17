@@ -1,5 +1,5 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
+    <div class="app-brand demo mb-4">
         <a href="" class="app-brand-link">
             {{-- <span class="app-brand-logo demo"> --}}
             <img src="{{ asset('assets/static/images/logo/auth.png') }}" width="155" alt="">
@@ -113,8 +113,7 @@
                     <div data-i18n="Analytics">Rekap Jurnal Siswa</div>
                 </a>
             </li>
-            <li
-                class="menu-item {{ request()->is('admin/pembimbing-sekolah-admin.rekap-monitoring') ? 'active' : '' }}">
+            <li class="menu-item {{ request()->is('admin/rekap-monitoring') ? 'active' : '' }}">
                 <a href="{{ route('admin.pembimbing-sekolah-admin.rekap-monitoring') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-list-check"></i>
                     <div data-i18n="Analytics">Rekap Kunjungan</div>
@@ -130,13 +129,13 @@
                     <div data-i18n="Analytics">Beranda</div>
                 </a>
             </li>
-            <li class="menu-item {{ request()->is('pembimbing/verifikasi-jurnal.index') ? 'active' : '' }}">
+            <li class="menu-item {{ request()->is('pembimbing/verifikasi-jurnal') ? 'active' : '' }}">
                 <a href="{{ route('pembimbing.verifikasi-jurnal.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-list-check"></i>
                     <div data-i18n="Analytics">Jurnal Siswa</div>
                 </a>
             </li>
-            <li class="menu-item {{ request()->is('pembimbing/presensi.index') ? 'active' : '' }}">
+            <li class="menu-item {{ request()->is('pembimbing/presensi') ? 'active' : '' }}">
                 <a href="{{ route('pembimbing.presensi.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar-check"></i>
                     <div data-i18n="Analytics">Presensi Siswa</div>
@@ -177,5 +176,15 @@
             </li>
         @endif
 
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Unduh</span>
+        </li>
+
+        <li class="menu-item border">
+            <a style="cursor: pointer" id="pwa-install-btn" class="menu-link">
+                <i class="menu-icon tf-icons bx bxl-android"></i>
+                <div data-i18n="Analytics">Unduh Aplikasi</div>
+            </a>
+        </li>
     </ul>
 </aside>

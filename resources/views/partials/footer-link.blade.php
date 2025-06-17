@@ -23,12 +23,14 @@
  <script async defer src="https://buttons.github.io/buttons.js"></script>
  {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
  <script>
-   setTimeout(() => {
-     const alert = document.querySelector('.alert');
-     if (alert) {
-       const bsAlert = new bootstrap.Alert(alert);
-       bsAlert.close();
-     }
-   }, 5000); // 5 detik
+     setTimeout(() => {
+         const alert = document.querySelector('.alert');
+         if (alert) {
+             const bsAlert = new bootstrap.Alert(alert);
+             bsAlert.close();
+         }
+     }, 5000); // 5 detik
  </script>
  @stack('custom-script')
+
+

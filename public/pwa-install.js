@@ -6,7 +6,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
     const installBtn = document.getElementById('pwa-install-btn');
     if (installBtn) {
-        installBtn.style.display = 'block';
+        installBtn.style.display = 'flex';
     }
 });
 
