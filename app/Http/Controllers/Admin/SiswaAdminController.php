@@ -126,8 +126,8 @@ class SiswaAdminController extends Controller
                 }
 
                 $fotoFile = $request->file('foto');
-                $fotoPath = $fotoFile->store('foto-siswa', 'public');
-                $fotoName = basename($fotoPath);
+                $fotoName = time() . '-' . Str::slug(pathinfo($fotoFile->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $fotoFile->getClientOriginalExtension();
+                $fotoFile->storeAs('foto-siswa', $fotoName, 'public');
             }
 
             // Update tabel siswa

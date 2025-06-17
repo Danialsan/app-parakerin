@@ -80,4 +80,6 @@ class AdminController extends Controller
             return redirect()->route('admin.informasi')->with('error', 'Informasi gagal disimpan.');
         }
     }
+
+
 }

@@ -46,6 +46,9 @@ Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function ()
     Route::get('jurnal/download', [JurnalHarianController::class, 'download'])->name('jurnal.download');
     Route::get('cek-jurnal', [JurnalHarianController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
 
+    Route::get('pengaturan', [BerandaController::class, 'pengaturan'])->name('pengaturan');
+    Route::post('pengaturan', [BerandaController::class, 'updatePengaturan'])->name('pengaturan.update');
+
 });
 
 // Admin
@@ -84,6 +87,9 @@ Route::prefix('admin')->middleware('isAdmin')->name('admin.')->group(function ()
     Route::get('siswa-by-jurusan', [PengaturanPklController::class, 'getSiswaByJurusan'])->name('siswa.by.jurusan');
     Route::get('pengaturan-pkl/download', [PengaturanPklController::class, 'download'])->name('pengaturan-pkl.download');
 
+    Route::get('pengaturan', [AdminController::class, 'pengaturan'])->name('pengaturan');
+    Route::post('pengaturan', [AdminController::class, 'updatePengaturan'])->name('pengaturan.update');
+
 });
 
 // Dudi
@@ -91,6 +97,10 @@ Route::prefix('dudi')->middleware('isDudi')->name('dudi.')->group(function () {
     Route::get('beranda', [BerandaDudiController::class, 'index'])->name('index');
     Route::get('presensi-siswa', [PresensiSiswaController::class, 'index'])->name('presensi-siswa');
     Route::get('jurnal-siswa', [JurnalSiswaController::class, 'index'])->name('jurnal-siswa');
+
+    Route::get('pengaturan', [BerandaDudiController::class, 'pengaturan'])->name('pengaturan');
+    Route::post('pengaturan', [BerandaDudiController::class, 'updatePengaturan'])->name('pengaturan.update');
+
 });
 
 Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing.')->group(function () {
@@ -105,5 +115,8 @@ Route::prefix('pembimbing')->middleware('isPembimbingSekolah')->name('pembimbing
     Route::get('pembimbing/presensi', [PresensiPembimbingController::class, 'presensiSiswaBimbingan'])->name('presensi.index');
     Route::post('verifikasi-jurnal/{id}/batal', [PembimbingJurnalController::class, 'batal'])
     ->name('verifikasi-jurnal.batal');
+
+    Route::get('pengaturan', [BerandaPembimbingController::class, 'pengaturan'])->name('pengaturan');
+    Route::post('pengaturan', [BerandaPembimbingController::class, 'updatePengaturan'])->name('pengaturan.update');
 
 });

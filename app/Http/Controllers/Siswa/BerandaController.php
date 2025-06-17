@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Siswa;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\Models\JurnalHarian;
 use Illuminate\Http\Request;
 use App\Models\PengaturanPkl;
 use App\Models\PresensiSiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BerandaController extends Controller
 {
@@ -44,15 +46,16 @@ class BerandaController extends Controller
 
         $nama_pembimbing = PengaturanPkl::where('siswa_id', $siswa->id)
             ->first()
-            ->pembimbing->nama_pembimbing;
+            ->pembimbing->nama_pembimbing ?? '-';
 
         $nama_industri = PengaturanPkl::where('siswa_id', $siswa->id)
             ->first()
-            ->dudi->nama_perusahaan;
+            ->dudi->nama_perusahaan ?? '-';
 
         $jurnal_belum_verifikasi = JurnalHarian::where('siswa_id', $siswa->id)
             ->where('verifikasi_pembimbing', false)
             ->count();
+
 
         return view('siswa.beranda', compact(
                 'siswa',
@@ -66,51 +69,59 @@ class BerandaController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function pengaturan()
     {
-        //
+        $user = auth()->user();
+        return view('pengaturan', [
+            'user_role' => 'siswa',
+            'siswa' => $user->siswa->first(),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function updatePengaturan(Request $request)
     {
-        //
-    }
+       try {
+            $user = auth()->user();
+            $request->validate([
+                'password' => 'nullable|min:6',
+                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ],
+            [
+                'password.min' => 'Password minimal 6 karakter.',
+                'foto.image' => 'File harus berupa gambar.',
+                'foto.max' => 'Ukuran gambar maksimal 2MB.',
+            ]);
+            // Update password jika diisi
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            // Update foto jika diunggah
+            if ($request->hasFile('foto')) {
+                // Ambil pembimbingnya dari relasi
+                $siswa = $user->siswa->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+                if ($siswa) {
+                    // Hapus foto lama jika ada
+                    if ($siswa->foto && $siswa->foto !== 'default.jpg') {
+                        Storage::disk('public')->delete('foto-siswa/' . $siswa->foto);
+                    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+                    $fotoFile = $request->file('foto');
+                    $fotoName = time() . '-' . Str::slug(pathinfo($fotoFile->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $fotoFile->getClientOriginalExtension();
+                    $fotoFile->storeAs('foto-siswa', $fotoName, 'public');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+                }
+                $siswa->foto = $fotoName;
+                $siswa->save();
+            }
+
+            $user->save();
+
+            return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
+        }
+
     }
 }

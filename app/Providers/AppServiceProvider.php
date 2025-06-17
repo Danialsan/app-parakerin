@@ -32,13 +32,13 @@ class AppServiceProvider extends ServiceProvider
                     // Mapping folder dan relasi berdasarkan role
                     $folderMap = [
                         'siswa' => 'foto-siswa',
-                        'pembimbing' => 'foto-pembimbing',
+                        'pembimbing' => 'foto-pembimbing', // ini adalah pembimbing sekolah
                         'dudi' => 'foto-dudi',
                     ];
 
                     $foto = match ($user->role) {
-                        'siswa' => $user->siswa?->foto,
-                        'pembimbing' => $user->pembimbing?->foto,
+                        'siswa' => $user->siswa->first()?->foto,
+                        'pembimbing' => $user->pembimbingSekolah->first()?->foto,
                         'dudi' => $user->dudi?->foto,
                         default => null,
                     };

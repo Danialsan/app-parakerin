@@ -102,8 +102,8 @@ class PembimbingSekolahAdminController extends Controller
                 }
 
                 $fotoFile = $request->file('foto');
-                $fotoPath = $fotoFile->store('foto-pembimbing', 'public');
-                $fotoName = basename($fotoPath);
+                $fotoName = time() . '-' . Str::slug(pathinfo($fotoFile->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $fotoFile->getClientOriginalExtension();
+                $fotoFile->storeAs('foto-pembimbing', $fotoName, 'public');
             }
 
             // Update tabel pembimbing

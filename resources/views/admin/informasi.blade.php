@@ -24,7 +24,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Judul</th>
+                <th>Target Informasi</th>
                 <th>Isi</th>
                 <th class="text-end">Aksi</th>
               </tr>
@@ -37,7 +37,7 @@
                   <td>
                     <div class="d-grid gap-1 d-md-flex justify-content-md-end">
                       <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
-                        data-nama="{{ $item->judul }}">
+                        data-isi="{{ $item->isi }}" data-target_role="{{ $item->target_role }}">
                         <i class="bx bx-trash"></i>
                       </button>
                     </div>
@@ -105,11 +105,12 @@
   <script>
     $(document).on('click', '.btn-delete', function() {
       const id = this.dataset.id;
-      const nama = this.dataset.nama;
+      const target_role = this.dataset.target_role;
+      const isi = this.dataset.isi;
 
       Swal.fire({
         title: 'Yakin ingin menghapus?',
-        text: "Informasi \"" + nama + "\" akan dihapus permanen!",
+        text: "Informasi \"" + isi + "\" akan dihapus permanen!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
