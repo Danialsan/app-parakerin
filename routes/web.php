@@ -44,11 +44,7 @@ Route::prefix('siswa')->middleware('isSiswa')->name('siswa.')->group(function ()
     Route::resource('jurnal', JurnalHarianController::class)->only(['index', 'store', 'destroy']);
     Route::get('jurnal/riwayat', [JurnalHarianController::class, 'riwayat'])->name('jurnal.riwayat');
     Route::get('jurnal/download', [JurnalHarianController::class, 'download'])->name('jurnal.download');
-<<<<<<< HEAD
     // Route::get('cek-jurnal', [JurnalController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
-=======
-    Route::get('cek-jurnal', [JurnalHarianController::class, 'cekJurnalHariIni'])->name('jurnal.cek');
->>>>>>> 5edff4375d7c00fec88ef9cf04f34c82747de7b0
 
 });
 
