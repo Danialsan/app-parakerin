@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Siswa;
 
+use Carbon\Carbon;
 use App\Models\Dudi;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -52,7 +53,9 @@ class PresensiController extends Controller
     {
         try {
             // Ambil waktu sekarang
-            $waktuSekarang = date('Y-m-d H:i:s');
+            $waktuSekarang = Carbon::now();
+
+            // dd($waktuSekarang);
 
             // Ambil user
             $user = Auth::user();

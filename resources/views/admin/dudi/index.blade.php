@@ -222,7 +222,7 @@
               <label for="file" class="form-label">Pilih file Excel (.xlsx)</label>
               <input type="file" name="file" class="form-control" required accept=".xlsx">
             </div>
-            <div class="alert alert-info" role="alert">
+            <div class="alert-info p-2">
               Gunakan format sesuai template. <br>
               <a href="{{ asset('template/template_dudi.xlsx') }}" class="btn btn-sm btn-outline-primary mt-2"
                 download>

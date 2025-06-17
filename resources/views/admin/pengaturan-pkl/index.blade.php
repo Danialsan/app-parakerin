@@ -71,61 +71,63 @@
           </div>
         </div>
       </div>
-
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nama Siswa</th>
-              <th>Jurusan</th>
-              <th>Dudi</th>
-              <th>Pembimbing Dudi</th>
-              <th>Pembimbing Sekolah</th>
-              <th>Tanggal Mulai</th>
-              <th>Tanggal Selesai</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($pengaturanPkl as $item)
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td>{{ $item->siswa->nama }}</td>
-                <td>{{ $item->jurusan->nama_jurusan }}</td>
-                <td>{{ $item->dudi->nama_perusahaan }}</td>
-                <td>{{ $item->dudi->nama_pembimbing }}</td>
-                <td>{{ $item->pembimbing->nama_pembimbing }}</td>
-                <td>{{ $item->mulai }}</td>
-                <td>{{ $item->selesai }}</td>
-                <td>
-                  <div class="d-grid gap-1 d-md-flex justify-content-md-end">
-                    <button type="button" class="btn btn-warning btn-sm btnEdit" data-id="{{ $item->id }}"
-                      data-dudi="{{ $item->dudi_id }}" data-pembimbing="{{ $item->pembimbing_sekolah_id }}"
-                      data-jurusan="{{ $item->jurusan_id }}" data-siswa="{{ $item->siswa_id }}"
-                      data-mulai="{{ $item->mulai }}" data-selesai="{{ $item->selesai }}" data-bs-toggle="modal"
-                      data-bs-target="#editModal">
-                      <i class="bx bx-pencil"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
-                      data-nama="{{ $item->siswa->nama }}"> <i class="bx bx-trash"></i>
-                    </button>
-                  </div>
-                </td>
+                <th>Nama Siswa</th>
+                <th>Jurusan</th>
+                <th>Dudi</th>
+                <th>Pembimbing Dudi</th>
+                <th>Pembimbing Sekolah</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
+                <th>Aksi</th>
               </tr>
-            @endforeach
+            </thead>
+            <tbody>
+              @foreach ($pengaturanPkl as $item)
+                <tr>
+                  <td>{{ $item->siswa->nama }}</td>
+                  <td>{{ $item->jurusan->nama_jurusan }}</td>
+                  <td>{{ $item->dudi->nama_perusahaan }}</td>
+                  <td>{{ $item->dudi->nama_pembimbing }}</td>
+                  <td>{{ $item->pembimbing->nama_pembimbing }}</td>
+                  <td>{{ $item->mulai }}</td>
+                  <td>{{ $item->selesai }}</td>
+                  <td>
+                    <div class="d-grid gap-1 d-md-flex justify-content-md-end">
+                      <button type="button" class="btn btn-warning btn-sm btnEdit" data-id="{{ $item->id }}"
+                        data-dudi="{{ $item->dudi_id }}" data-pembimbing="{{ $item->pembimbing_sekolah_id }}"
+                        data-jurusan="{{ $item->jurusan_id }}" data-siswa="{{ $item->siswa_id }}"
+                        data-mulai="{{ $item->mulai }}" data-selesai="{{ $item->selesai }}" data-bs-toggle="modal"
+                        data-bs-target="#editModal">
+                        <i class="bx bx-pencil"></i>
+                      </button>
 
-            @if ($pengaturanPkl->isEmpty())
-              <tr>
-                <td colspan="8" class="text-center">Tidak ada data!</td>
-              </tr>
-            @endif
-          </tbody>
-        </table>
+                      <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $item->id }}"
+                        data-nama="{{ $item->siswa->nama }}"> <i class="bx bx-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              @endforeach
+
+              @if ($pengaturanPkl->isEmpty())
+                <tr>
+                  <td colspan="8" class="text-center">Tidak ada data!</td>
+                </tr>
+              @endif
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end">
+          {{ $pengaturanPkl->links() }}
+        </div>
+        <!-- /.table-responsive -->
+
       </div>
-      <div class="d-flex justify-content-end">
-        {{ $pengaturanPkl->links() }}
-      </div>
-      <!-- /.table-responsive -->
     </div>
     <!-- /.card-body -->
   </div>

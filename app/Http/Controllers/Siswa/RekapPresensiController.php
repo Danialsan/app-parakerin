@@ -83,7 +83,8 @@ class RekapPresensiController extends Controller
                 $query->whereBetween('waktu_masuk', [$tanggal_awal, $tanggal_akhir]);
             })
             ->orderBy('waktu_masuk', 'asc')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('siswa.rekap-presensi', compact('rekap_presensi'));
     }

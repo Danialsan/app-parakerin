@@ -43,7 +43,7 @@
       {{-- Table --}}
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered table-sm">
+          <table class="table table-striped">
             <thead class="table-light">
               <tr>
                 <th>No</th>
@@ -51,7 +51,7 @@
                 <th>Jurusan</th>
                 <th>DUDI</th>
                 <th>Tanggal</th>
-                <th>Capaian</th>
+                <th>Capaian Pembelajaran</th>
                 <th>Kegiatan</th>
                 <th>Pembimbing</th>
                 <th>Status</th>
@@ -63,16 +63,16 @@
                   <td>{{ $jurnal->firstItem() + $i }}</td>
                   <td>{{ $item->siswa->nama }}</td>
                   <td>{{ $item->siswa->jurusan->nama_jurusan ?? '-' }}</td>
-                  <td>{{ $item->siswa->dudi->nama_dudi ?? '-' }}</td>
+                  <td>{{ $item->siswa->dudi->nama_perusahaan ?? '-' }}</td>
                   <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                  <td>{{ $item->capaian }}</td>
+                  <td>{{ $item->capaianPembelajaran->deskripsi_cp ?? '-' }}</td>
                   <td>{{ $item->kegiatan }}</td>
                   <td>{{ $item->siswa->pengaturanPkl->pembimbing->nama_pembimbing ?? '-' }}</td>
                   <td>
-                    @if ($item->diverifikasi)
+                    @if ($item->verifikasi_pembimbing)
                       <span class="badge bg-success">Terverifikasi</span>
                     @else
-                      <span class="badge bg-warning text-dark">Belum</span>
+                      <span class="badge bg-danger">Belum</span>
                     @endif
                   </td>
                 </tr>

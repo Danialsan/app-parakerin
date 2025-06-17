@@ -111,9 +111,9 @@
           <td>{{ $i + 1 }}</td>
           <td>{{ $item->siswa->nama }}</td>
           <td>{{ $item->siswa->jurusan->nama_jurusan ?? '-' }}</td>
-          <td>{{ $item->siswa->dudi->nama_dudi ?? '-' }}</td>
+          <td>{{ $item->siswa->dudi->nama_perusahaan ?? '-' }}</td>
           <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-          <td>{{ $item->capaian }}</td>
+          <td>{{ $item->capaianPembelajaran->deskripsi_cp ?? '-' }}</td>
           <td>{{ $item->kegiatan }}</td>
           <td>{{ $item->siswa->pengaturanPkl->pembimbing->nama_pembimbing ?? '-' }}</td>
           <td>{{ $item->verifikasi_pembimbing ? 'Terverifikasi' : 'Belum' }}</td>

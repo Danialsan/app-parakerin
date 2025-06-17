@@ -76,6 +76,19 @@ class CapaianPembelajaranController extends Controller
         }
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        try {
+            Excel::import(new CapaianPembelajaranImport, $request->file('file'));
+            return redirect()->back()->with('success', 'Data Capaian Pembelajaran berhasil di Unggah.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat Unggah: ' . $e->getMessage());
+        }
+    }
 
 
 }

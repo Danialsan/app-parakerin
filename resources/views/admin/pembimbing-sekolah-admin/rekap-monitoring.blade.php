@@ -47,14 +47,8 @@
                 <th>Tanggal</th>
                 <th>Keperluan</th>
                 <th>Nama Pembimbing</th>
-                <th>Nama Siswa</th>
-                <th>Jurusan</th>
                 <th>DUDI</th>
-                <th>Kehadiran</th>
-                <th>Sikap</th>
-                <th>Progres</th>
-                <th>Kesesuaian</th>
-                <th>Catatan</th>
+                <th>Jumlah Siswa</th>
                 <th>Foto</th>
               </tr>
             </thead>
@@ -65,14 +59,8 @@
                   <td>{{ \Carbon\Carbon::parse($m->monitoring->tanggal)->format('d-m-Y') }}</td>
                   <td>{{ ucfirst($m->monitoring->keperluan) }}</td>
                   <td>{{ $m->monitoring->pembimbing->nama_pembimbing ?? '-' }}</td>
-                  <td>{{ $m->siswa->nama ?? '-' }}</td>
-                  <td>{{ $m->siswa->jurusan->nama_jurusan ?? '-' }}</td>
                   <td>{{ $m->siswa->dudi->nama_perusahaan ?? '-' }}</td>
-                  <td>{{ $m->kehadiran }}</td>
-                  <td>{{ $m->sikap }}</td>
-                  <td>{{ $m->progres }}</td>
-                  <td>{{ $m->kesesuaian }}</td>
-                  <td>{{ $m->catatan }}</td>
+                  <td>({{ $m->jumlah_siswa }} siswa)</td>
                   <td>
                     @if ($m->monitoring->foto)
                       <a href="{{ asset('storage/' . $m->monitoring->foto) }}" target="_blank">

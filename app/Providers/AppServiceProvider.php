@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
 
         public function boot()
         {
+            Carbon::setLocale('id');
             View::composer('*', function ($view) {
                 $user = Auth::user();
                 $defaultFoto = asset('assets/img/avatars/default.png');

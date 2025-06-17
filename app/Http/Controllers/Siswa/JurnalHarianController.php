@@ -96,7 +96,7 @@ class JurnalHarianController extends Controller
             $query->whereBetween('tanggal', [$request->tanggal_awal, $request->tanggal_akhir]);
         }
 
-        $jurnals = $query->with('capaianPembelajaran')->latest()->paginate(10);
+        $jurnals = $query->with('capaianPembelajaran')->latest()->paginate(10)->withQueryString();
 
         return view('siswa.riwayat-jurnal', compact('jurnals'));
     }
